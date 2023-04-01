@@ -29,8 +29,8 @@ router.post('/login', async function (req, res) {
     console.log(req.body);
     const exists = await modelRaiser.exists({ name: req.body.name });
     if(exists){
-        const response = await modelRaiser.findOne({ name: req.body.password });
-        if (response.password == password) {
+        const response = await modelRaiser.findOne({ name: req.body.name });
+        if (response.password == req.body.password) {
             res.send({ raiser: response });
         }else{
             res.send({ raiser: null });

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:app/classes/Crowdfund.dart';
 import 'package:app/classes/Raiser.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -9,11 +10,9 @@ class BackendController extends GetxController {
 
   static Future<Raiser?> getRaiser(String id) async {
     try {
-      var response = await http.get(Uri.parse("http://192.168.192.148:3000/getRaiser?id=${id}"));
-      log(response.statusCode.toString());
-      if (response.statusCode == 200) {
-        log(response.body);
-        return Raiser.fromJson(jsonDecode(response.body));
+      var response = await http.get(Uri.parse("http://localhost:3000/raiser/get?id=$id"));
+      if(response.statusCode == 200){
+        return Raiser.fromJson(jsonDecode(response.body)["raiser"]);
       } else {
         log("getRaiser() failed, status code: ${response.statusCode}");
       }
@@ -56,10 +55,8 @@ class BackendController extends GetxController {
         },
         body: jsonEncode({"name": username, "password": sha256.convert(utf8.encode(password)).toString()}),
       );
-      log(response.statusCode.toString());
       if(response.statusCode == 200){
-        log(response.body);
-        return Raiser.fromJson(jsonDecode(response.body));
+        return Raiser.fromJson(jsonDecode(response.body)["raiser"]);
       } else {
         log("loginRaiser() failed, status code: ${response.statusCode.toString()}");
       }
@@ -82,9 +79,7 @@ class BackendController extends GetxController {
         },
         body: jsonEncode(data),
       );
-      log(response.statusCode.toString());
       if(response.statusCode == 200){
-        log(response.body);
         return !jsonDecode(response.body)["isMatch"];
       } else {
         log("registerRaiser() failed, status code: ${response.statusCode}");
@@ -93,6 +88,21 @@ class BackendController extends GetxController {
       log("Error in registerRaiser(): ${e.toString()}");
     }
     return false;
+  }
+
+  static Future<List<Crowdfund>> getCrowdfund() async {
+    try {
+      var response = await http.get(Uri.parse("http://localhost:3000/crowdFund/get"),);
+      if(response.statusCode == 200){
+        List<Crowdfund> crowdfunds = (jsonDecode(response.body) as List<dynamic>).map((e) => Crowdfund.fromJson(e)).toList();
+        return crowdfunds;
+      } else {
+        log("getCrowdfund() failed, status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error in getCrowdfund(): ${e.toString()}");
+    }
+    return [];
   }
 
 }

@@ -1,14 +1,9 @@
 import 'dart:developer';
-import 'dart:io';
 import 'dart:typed_data';
-import 'dart:html' as html;
-
 import 'package:app/components/BasicTextField.dart';
 import 'package:app/components/CustomDialog.dart';
 import 'package:app/components/PersonalizedTextField.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -26,18 +21,18 @@ class MyController extends GetxController {
   }
 }
 
-class CreateCrowfundDialog extends StatelessWidget {
-  CreateCrowfundDialog({super.key, this.imagePath});
+class CreateCrowdfundDialog extends StatelessWidget {
+  CreateCrowdfundDialog({super.key, this.imagePath});
 
   final Rx<TextEditingController> nameController = TextEditingController().obs;
   final Rx<TextEditingController> descriptionController =
       TextEditingController().obs;
   final Rx<TextEditingController> dateController = TextEditingController().obs;
-  final Rx<TextEditingController> adressController =
+  final Rx<TextEditingController> addressController =
       TextEditingController().obs;
   final Rx<TextEditingController> nameReceptorController =
       TextEditingController().obs;
-  final Rx<TextEditingController> goalAmaountController =
+  final Rx<TextEditingController> goalAmountController =
       TextEditingController().obs;
   //final controller = Get.put(MyController());
 
@@ -58,8 +53,8 @@ class CreateCrowfundDialog extends StatelessWidget {
       width: screenSize.width * 0.6,
       height: screenSize.height * 0.98,
       child: Container(
-          padding: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.only(bottom: 10),
+          decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Column(
@@ -86,8 +81,8 @@ class CreateCrowfundDialog extends StatelessWidget {
                                       width: modalSize.width * 0.797,
                                     ))))
                         : DottedBorder(
-                            radius: Radius.circular(12),
-                            color: Color(0xFFBAB9B9),
+                            radius: const Radius.circular(12),
+                            color: const Color(0xFFBAB9B9),
                             borderType: BorderType.RRect,
                             dashPattern: const [8, 4],
                             child: SizedBox(
@@ -100,14 +95,14 @@ class CreateCrowfundDialog extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.add_photo_alternate,
+                                      const Icon(Icons.add_photo_alternate,
                                           color: Color(0xFF989494)),
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.02,
                                       ),
-                                      Text(
+                                      const Text(
                                           "Pulsa para añadir una imagen de portada",
                                           style: TextStyle(
                                               color: Color(0xFF989494),
@@ -121,7 +116,7 @@ class CreateCrowfundDialog extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 5),
                   child: Column(
                     children: [
                       SizedBox(
@@ -148,7 +143,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
@@ -164,7 +159,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                                   height: modalSize.height * 0.09,
                                 ),
                                 RichText(
-                                    text: TextSpan(
+                                    text: const TextSpan(
                                         style: TextStyle(
                                           fontSize: 16,
                                         ),
@@ -184,16 +179,16 @@ class CreateCrowfundDialog extends StatelessWidget {
                                 BasicTextField(
                                     textPlaceholder: "0.00",
                                     hasIcon: true,
-                                    icon: Icon(FontAwesomeIcons.ethereum),
+                                    icon: const Icon(FontAwesomeIcons.ethereum),
                                     type: 1,
-                                    controller: goalAmaountController),
+                                    controller: goalAmountController),
                                 SizedBox(
                                   height: modalSize.height * 0.04,
                                 ),
                                 BasicTextField(
                                   textPlaceholder: formattedDate,
                                   hasIcon: true,
-                                  icon: Icon(Icons.calendar_month),
+                                  icon: const Icon(Icons.calendar_month),
                                   type: 3,
                                   controller: dateController,
                                 )
@@ -213,7 +208,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   RichText(
-                                      text: TextSpan(
+                                      text: const TextSpan(
                                           style: TextStyle(
                                             fontSize: 16,
                                           ),
@@ -234,7 +229,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                                     width: modalSize.width * 0.15,
                                   ),
                                   RichText(
-                                      text: TextSpan(
+                                      text: const TextSpan(
                                           style: TextStyle(
                                             fontSize: 16,
                                           ),
@@ -265,7 +260,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                                       textPlaceholder: "Adress/Key",
                                       hasIcon: false,
                                       type: 1,
-                                      controller: adressController)
+                                      controller: addressController)
                                 ],
                               )
                             ],
@@ -273,7 +268,7 @@ class CreateCrowfundDialog extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 35, bottom: 30),
+                        padding: const EdgeInsets.only(top: 35, bottom: 30),
                         child: PersonalizedTextField(
                             title: "Ingresa una descripción para tu camapaña",
                             textPlaceholder:
@@ -286,21 +281,21 @@ class CreateCrowfundDialog extends StatelessWidget {
                           onPressed: () {
                             if (nameController.value.text.isNotEmpty &&
                                 bytesFile != null &&
-                                goalAmaountController.value.text != null &&
+                                goalAmountController.value.text != null &&
                                 dateController.value.text.isNotEmpty &&
                                 nameReceptorController.value.text.isNotEmpty &&
-                                adressController.value.text.isNotEmpty &&
+                                addressController.value.text.isNotEmpty &&
                                 descriptionController.value.text.isNotEmpty) {
                               Get.back();
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                                  .showSnackBar(const SnackBar(
                                 // ignore: prefer_const_constructors
                                 content: Text("Campaña guardada correctamente",
                                     textAlign: TextAlign.center),
                               ));
                             } else {
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                                  .showSnackBar(const SnackBar(
                                 // ignore: prefer_const_constructors
                                 content: Text("No pueden haber campos vacíos",
                                     textAlign: TextAlign.center),
@@ -309,11 +304,11 @@ class CreateCrowfundDialog extends StatelessWidget {
                           },
                           style: TextButton.styleFrom(
                               elevation: 2,
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5))),
-                              backgroundColor: Color(0xFF4D5D67)),
-                          child: SizedBox(
+                              backgroundColor: const Color(0xFF4D5D67)),
+                          child: const SizedBox(
                             height: 45,
                             width: double.infinity,
                             child: Center(

@@ -44,6 +44,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   file_picker: ^5.2.6
   image_picker_web: any
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:

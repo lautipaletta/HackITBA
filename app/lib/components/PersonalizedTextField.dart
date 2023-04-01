@@ -13,11 +13,25 @@ class PersonalizedTextField extends StatelessWidget {
   final TextEditingController controller;
   final int type;
 
+  TextInputType getTextInputType(int type){
+    switch(type){
+      case 0:
+        return TextInputType.name;
+      case 1:
+        return TextInputType.emailAddress;
+      case 2:
+        return TextInputType.visiblePassword;
+      case 3:
+        return TextInputType.multiline;
+    }
+    return TextInputType.text;
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      keyboardType: (type  == 0)? TextInputType.name : ( (type == 1)? TextInputType.emailAddress : TextInputType.visiblePassword),
+      keyboardType: getTextInputType(type),
+      maxLines: (type == 3) ? 3 : 1,
       obscureText: (type==2),
       decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(

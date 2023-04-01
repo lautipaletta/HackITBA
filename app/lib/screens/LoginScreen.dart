@@ -1,7 +1,9 @@
+import 'package:app/classes/Raiser.dart';
 import 'package:app/components/PersonalizedTextField.dart';
+import 'package:app/controllers/BackendController.dart';
+import 'package:app/controllers/SharedPreferencesController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -9,10 +11,8 @@ import 'package:get/get_core/src/get_main.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final emailTextController = TextEditingController();
+  final nameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,12 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width*0.45,
                 child: Column(
-                  
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           "¡Hola de nuevo!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -41,13 +40,13 @@ class LoginScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           ),
-                          const SizedBox(height: 20,),
-                          const Text(
+                          SizedBox(height: 20,),
+                          Text(
                             "Iniciá sesión o creá una cuenta para crear colectas en Colectapp"
                           ),
                       ],
                     ),
-                    PersonalizedTextField(title: "Email", textPlaceholder: "Ingrese su correo electrónico", icon: Icons.mail, controller: emailTextController, type: 1),
+                    PersonalizedTextField(title: "Nombre", textPlaceholder: "Ingrese su nombre", icon: Icons.person, controller: nameTextController, type: 1),
                     PersonalizedTextField(title: "Contraseña", textPlaceholder: "Ingrese su contraseña", icon: Icons.lock, controller: passwordTextController, type: 2 ),
                     Column(
                       children: [
@@ -56,11 +55,27 @@ class LoginScreen extends StatelessWidget {
                             backgroundColor: const Color(0xFF67C10C),
                             elevation: 10,                      
                           ),
-    
-                          onPressed: (){}, 
+                          onPressed: () async {
+                            String username = nameTextController.value.text;
+                            String password = passwordTextController.value.text;
+                            if(username != "" && password != ""){
+                              Raiser? raiser = await BackendController.loginRaiser(username, password);
+                              if(raiser != null){
+                                await SharedPreferencesController.saveRaiserData(raiser);
+                                Get.toNamed("/");
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  // ignore: prefer_const_constructors
+                                  content: Text("Usuario o contraseña incorrecta.",
+                                      textAlign: TextAlign.center),
+                                ));
+                              }
+                            }
+                          },
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width*0.4,
-                            height: 40,
+                            height: 60,
                             child: const Center(
                               child: Text(
                                 "Iniciar sesión",

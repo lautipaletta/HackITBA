@@ -1,10 +1,9 @@
-import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
-import 'package:app/components/CreateCrowfundDialog.dart';
+import 'package:app/components/CreateCrowdfundDialog.dart';
 import 'package:app/components/CrowdfundCard.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
-import 'package:app/controllers/BackendController.dart';
+import 'package:app/controllers/AppController.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +13,19 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   final ScrollController _scrollController = ScrollController();
+  final AppController _appController = Get.find<AppController>();
+
+  Widget getLogInButton(AppController appController){
+    if(appController.loggedInRaiser == null){
+      return Column(
+        children: [
+          AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
+          AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
+        ],
+      );
+    }
+    return AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +41,16 @@ class HomeScreen extends StatelessWidget {
           child: Wrap(
             alignment: WrapAlignment.spaceEvenly,
             children: [
-              AppBarTextItem(text: "Inicio", onTap: (){}),
-              AppBarTextItem(text: "Campañas", onTap: (){}),
-              AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-              AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/")),
+              const SizedBox(),
+              AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+              AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+              GetBuilder<AppController>(
+                init: _appController,
+                builder: (controller){
+                  return getLogInButton(controller);
+                },
+              ),
+              const SizedBox(),
             ],
           ),
         ),
@@ -83,11 +101,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             SizedBox(height: screenSize.height * 0.05,),
                             TextButton(
-                              onPressed: () async {
-                                // => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)
-                                await BackendController.loginRaiser("pedrin", "1234");
-                                // await BackendController.registerRaiser(Raiser(name: "pedrin", description: "lauta", contactInfo: "123", profileImage: "https", address: "adasd"), "1234");
-                              },
+                              onPressed: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut),
                               style: ButtonStyle(
                                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
                                   padding: const MaterialStatePropertyAll(EdgeInsets.all(25.0)),
@@ -132,7 +146,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 200,),
-                const Text("Donaciones vigentes en las que puedes colaborar", style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+                const Text("Colectas vigentes en las que puedes colaborar", style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
                 const SizedBox(height: 100,),
                 SizedBox(
                   width: screenSize.width * 0.8,
@@ -203,7 +217,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
                 ),
                 child: Center(
-                  child: AppBarTextItem(text: "Crear Colecta", onTap: () => Get.dialog(CreateCrowfundDialog(imagePath: null)), fontSize: 22.0,),
+                  child: AppBarTextItem(text: "Crear Colecta", onTap: () => Get.dialog(CreateCrowdfundDialog(imagePath: null)), fontSize: 22.0,),
                 ),
               ),
             ),

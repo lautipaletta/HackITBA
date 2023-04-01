@@ -23,5 +23,4 @@ class Raiser {
       "address": address,
     };
   }
-
 }

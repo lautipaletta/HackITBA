@@ -1,22 +1,26 @@
+import 'package:app/classes/Raiser.dart';
+
 class Crowdfund {
   final String id;
   final String title;
   final String description;
-  final String receiver;
+  final String receiverDescription;
   final int deadline;
-  // final Map<String, dynamic> billingInfo; // TODO Implement billing info
+  final String idOfRaiser;
+  final String goalAmount;
+  final String receiverAddress;
+  final List<String> images;
   bool active = true;
-  List<String> resultImagesUrls = [];
-  int goalAmount;
-  int collectedAmount = 0;
+  List<String> resultImages = [];
   String resultComments = "";
+  String? contractAddress;
 
-  Crowdfund({required this.title, required this.description, required this.receiver, required this.goalAmount,
-  required this.deadline}) : id = DateTime.now().millisecondsSinceEpoch.toString();
+  Crowdfund({required this.title, required this.description, required this.receiverDescription, required this.goalAmount,
+  required this.deadline, required this.receiverAddress, required this.images, required this.idOfRaiser}) : id = DateTime.now().millisecondsSinceEpoch.toString();
 
   Crowdfund.fromJson(Map<String, dynamic> json) : id = json["id"], active = json["active"], title = json["title"], description = json["description"],
-        receiver = json["receiver"], goalAmount = json["goalAmount"], collectedAmount = json["collectedAmount"],
-        deadline = json["deadline"], resultImagesUrls = json["resultImagesUrls"], resultComments = json["resultComments"];
+        receiverDescription = json["receiverDescription"], goalAmount = json["goalAmount"], deadline = json["deadline"], images = json["images"], contractAddress = json["contractAddress"],
+        resultImages = json["resultImages"], resultComments = json["resultComments"], receiverAddress = json["receiverAddress"], idOfRaiser = json["idOfRaiser"];
 
   Map<String, dynamic> toJson(){
     return {
@@ -24,12 +28,15 @@ class Crowdfund {
       "active": active,
       "title": title,
       "description": description,
-      "receiver": receiver,
+      "receiver": receiverDescription,
       "goalAmount": goalAmount,
-      "collectedAmount": collectedAmount,
       "deadline": deadline,
-      "resultImagesUrls": resultImagesUrls,
+      "resultImages": resultImages,
+      "images": images,
       "resultComments": resultComments,
+      "contractAddress": contractAddress,
+      "receiverAddress": receiverAddress,
+      "idOfRaiser": idOfRaiser,
     };
   }
 
