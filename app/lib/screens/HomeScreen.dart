@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
               AppBarTextItem(text: "Inicio", onTap: (){}),
               AppBarTextItem(text: "Campañas", onTap: (){}),
               AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-              AppBarTextItem(text: "¿Qué es CollectApp?", onTap: (){}),
+              AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/")),
             ],
           ),
         ),
