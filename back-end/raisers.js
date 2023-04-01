@@ -14,7 +14,7 @@ router.get('/get', async function (req, res) {
 });
 
 router.post('/new', async function (req, res) {
-    const matches = modelRaiser.findOne({id: req.body.id});
+    const matches = modelRaiser.findOne({id: req.body.raiser.id});
     if (matches) {
         res.send({isMatch: true});
     } else {
