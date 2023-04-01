@@ -2,6 +2,7 @@ import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CrowdfundCard.dart';
+import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -139,35 +140,43 @@ class HomeScreen extends StatelessWidget {
                         goalAmount: 1000,
                         receiver: "pepe",
                         title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: () => Get.dialog(
+                        CrowdfundInfoDialog(crowdfund: Crowdfund(
+                          deadline: 3123125631,
+                          description: "descripcion",
+                          goalAmount: 1000,
+                          receiver: "pepe",
+                          title: "Voy a donar cajas de alimentos balanceado al comedero N°4 de Parque Patricios",
+                        )),
+                      ),),
                       CrowdfundCard(crowdfund: Crowdfund(
                         deadline: 3123125631,
                         description: "descripcion",
                         goalAmount: 1000,
                         receiver: "pepe",
                         title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
                         deadline: 3123125631,
                         description: "descripcion",
                         goalAmount: 1000,
                         receiver: "pepe",
                         title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
                         deadline: 3123125631,
                         description: "descripcion",
                         goalAmount: 1000,
                         receiver: "pepe",
                         title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
                         deadline: 3123125631,
                         description: "descripcion",
                         goalAmount: 1000,
                         receiver: "pepe",
                         title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                     ],
                   ),
                 ),
