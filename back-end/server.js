@@ -16,8 +16,6 @@ app.use(express.json());
 
 app.use("/raiser", raiserRouter);
 
-const {modelCrowdFund} = require("./models/crowdFundModel");
-
 var port = 3000;
 
 app.listen(port, () => {
