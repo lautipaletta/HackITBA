@@ -1,5 +1,6 @@
 import 'package:app/components/AppBarTextItem.dart';
-import 'package:app/constants.dart';
+import 'package:app/classes/Crowdfund.dart';
+import 'package:app/components/CampaignCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
