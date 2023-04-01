@@ -71,4 +71,4 @@ async function getCollectedAmount(contractAddress) {
     return amountEther; 
 }
 
-module.exports = { createCrowfundingContract, addDonor, getCollectedAmount };
+module.exports = { createCrowfundingContract, addDonor, getCollectedAmount, checkExpirationDate };

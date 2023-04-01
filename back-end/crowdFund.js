@@ -4,7 +4,7 @@ const router = express.Router();
 const modelRaiser = require("./models/raiserModel");
 const modelCrowdFund = require("./models/crowdFundModel");
 
-const { createCrowfundingContract, addDonor, getCollectedAmount } = require("./smartcontracts/smartcontracts");
+const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpirationDate } = require("./smartcontracts/smartcontracts");
 
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({ state: 1 });
@@ -45,10 +45,6 @@ router.post("/donate", async function (req, res) {
     } catch (err) {
         res.status(404).send({ error: err });
     }
-});
-
-router.post("/getProgress", async function (req, res) {
-    res.send({ amount: await getCollectedAmount(req.body.contractAddress) });
 });
 
 module.exports = router;
