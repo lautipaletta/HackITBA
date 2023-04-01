@@ -50,27 +50,38 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: Stack(
                     children: [
-                      SizedBox(
-                        height: screenSize.height - 67,
-                        width: screenSize.width / 2,
-                        child: Column(
-                          children: [
-                            Wrap(
-                              children: [
-                                Text("Donar de manera ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
-                                Text("segura ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
-                                Text("y ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
-                                Text("transparente ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
-                                Text("nunca fue tan fácil.", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
                       Positioned(
                         bottom: 0,
-                        right: screenSize.width * 0.1,
+                        right: screenSize.width * 0.05,
                         child: SvgPicture.asset("assets/svg/home.svg", width: screenSize.width / 2.5,),
+                      ),
+                      SizedBox(
+                        height: screenSize.height - 67,
+                        width: screenSize.width * 0.6,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Wrap(
+                              children: const [
+                                FittedBox(child: Text("Donar de manera ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
+                                FittedBox(child: Text("segura ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),)),
+                                FittedBox(child: Text("y ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
+                                FittedBox(child: Text("transparente ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),)),
+                                FittedBox(child: Text("nunca fue tan fácil.", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
+                              ],
+                            ),
+                            SizedBox(height: screenSize.height * 0.05,),
+                            TextButton(
+                              onPressed: (){},
+                              style: ButtonStyle(
+                                backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                                padding: const MaterialStatePropertyAll(EdgeInsets.all(25.0)),
+                                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)))
+                              ),
+                              child: const Text("Ver campañas", style: TextStyle(color: Colors.black54, fontSize: 24.0),),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -91,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
                 ),
                 child: Center(
-                  child: AppBarTextItem(text: "Crear Colecta", onTap: (){},),
+                  child: AppBarTextItem(text: "Crear Colecta", onTap: (){}, fontSize: 22.0,),
                 ),
               ),
             ),
