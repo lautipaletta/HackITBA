@@ -12,6 +12,9 @@ Devuelve {raiser: raiser}
 GET /crowdFund/get
 No recibe nada, ordena crowdFunds y los devuelve junto a su raiser en objetos: {crowdFund: crowdFund, raiser: raiser}
 
+GET /crowdFund/search
+Recibe text como parametro, devuelve 3 resultados mas similares.
+
 POST /crowdFund/new
 Recibe {crowdFund: crowFund, raiser: raised}
 Crea contracto, lo guarda en crowdFunds collection y agrega crowFund.id a raiser.idOfCrowfunds[]

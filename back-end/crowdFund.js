@@ -15,6 +15,11 @@ router.get("/get", async function (req, res) {
     res.send(data);
 });
 
+router.get("/search", async function(req, res){
+    const results = await modelCrowdFund.fuzzy(req.query.text);
+    res.send(results.sort((a, b) => (a.similarity>b.similarity)? -1 : 1 ).slice(3));
+});
+
 router.post("/new", async function (req, res) {
     const data = req.body.crowdFund;
     const raiser = req.body.raiser;
