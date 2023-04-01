@@ -1,38 +1,22 @@
 version: "3.4"
 services:
-  truffle:
-    build:
-      context: .
-      target: truffle
-    depends_on:
-      - ganache
-    networks:
-      - backend
-    volumes:
-      - .:/smartContract
-  ganache:
-    build:
-      context: .
-      target: ganache
-    ports:
-      - 8545:8545
-    networks:
-      - backend
-  web:
-    build: .
-    ports:
-      - 3000:3000
-  db:
-    image: mongo
-    ports:
-      - 27017:27017
-    environment:
-      - MONGO_INITDB_DATABSE=crowdfunding
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    volumes:
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-      - ./mongo-volume:/data/db
-networks:
   backend:
-    driver: "bridge"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongo:27017/crowdfunding
+      PORT: 3000
+  ganache:
+    image: trufflesuite/ganache-cli:latest
+    ports:
+      - "8545:8545"
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
