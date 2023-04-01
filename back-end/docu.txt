@@ -3,7 +3,8 @@ Recibe String (raiser.id) por parametro
 Devuelve {raiser: (raiser - password)} o {raiser: null} si no existe
 
 POST /raisers/new
-Recibe raiser y lo guarda en la raisers collection, (lo devuelve for good meassure)
+Recibe raiser y lo guarda en la raisers collection si no hay match de nombre
+Devuelve {match: Boolean}
 
 POST /raisers/login
 Recibe {name: String, password: String}

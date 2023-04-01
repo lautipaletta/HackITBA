@@ -18,7 +18,8 @@ router.post('/new', async function (req, res) {
     if (matches) {
         res.send({match: false});
     } else {
-        const raiser = new modelRaiser(req.body);
+        const raiser = new modelRaiser(req.body.raiser);
+        raiser.password = req.body.password;
         await raiser.save();
         res.send({match: false});
     }
