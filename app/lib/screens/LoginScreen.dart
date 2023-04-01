@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Text(
+                        const Text(
                           "¡Hola de nuevo!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -41,8 +41,8 @@ class LoginScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           ),
-                          SizedBox(height: 20,),
-                          Text(
+                          const SizedBox(height: 20,),
+                          const Text(
                             "Iniciá sesión o creá una cuenta para crear colectas en Colectapp"
                           ),
                       ],
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         TextButton(
                           style: TextButton.styleFrom(
-                            backgroundColor: Color(0xFF67C10C),
+                            backgroundColor: const Color(0xFF67C10C),
                             elevation: 10,                      
                           ),
     
@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width*0.4,
                             height: 40,
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "Iniciar sesión",
                                 style: TextStyle(
@@ -73,10 +73,10 @@ class LoginScreen extends StatelessWidget {
                                 textAlign: TextAlign.center,),
                             ),
                           )),
-                        SizedBox(height: 14,),
+                        const SizedBox(height: 14,),
                         TextButton(onPressed: (){
                           Get.toNamed("/register");
-                        }, child: Text(
+                        }, child: const Text(
                           "¿No tienes cuenta? Registrate",
                           style: TextStyle(
                             fontSize: 15,
@@ -92,7 +92,7 @@ class LoginScreen extends StatelessWidget {
               Container(
                 height: double.infinity,
                 width: MediaQuery.of(context).size.width*0.45,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Color(0xFFE8FFD0),
                 ),

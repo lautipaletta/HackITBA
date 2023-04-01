@@ -24,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
             Container(
               height: double.infinity,
               width: MediaQuery.of(context).size.width*0.45,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 color: Color(0xFFE8FFD0),
               ),
@@ -36,14 +36,6 @@ class RegisterScreen extends StatelessWidget {
                     child: Image.asset(
                         "assets/png/profileRegister.png",
                         height: MediaQuery.of(context).size.height*0.55,),
-                  ),
-                  Positioned(
-                    left: MediaQuery.of(context).size.height*0.8,
-                    bottom: MediaQuery.of(context).size.height*0.05,
-                    child: Image.asset(
-                        "assets/png/coinRegister.png",
-                        width: MediaQuery.of(context).size.height*0.09,
-                        ),
                   ),
                 ],
               ),
@@ -58,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text(
+                      const Text(
                         "¡Bienvenido!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -66,8 +58,8 @@ class RegisterScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                         ),
-                        SizedBox(height: 20,),
-                        Text(
+                        const SizedBox(height: 20,),
+                        const Text(
                           "Completá los datos para comenzar a usar Colectapp"
                         ),
                     ],
@@ -77,7 +69,7 @@ class RegisterScreen extends StatelessWidget {
                   PersonalizedTextField(title: "Repetir contraseña", textPlaceholder: "Repetí nuevamente tu contraseña", icon: Icons.lock, controller: passwordTextController, type: 2 ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xFF67C10C),
+                      backgroundColor: const Color(0xFF67C10C),
                       elevation: 10,                      
                     ),
 
@@ -85,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
                       height: 40,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Crear cuenta",
                           style: TextStyle(
@@ -97,11 +89,11 @@ class RegisterScreen extends StatelessWidget {
                           textAlign: TextAlign.center,),
                       ),
                     )),
-                  SizedBox(height: 14,),
+                  const SizedBox(height: 14,),
                   TextButton(onPressed: (){
-                    Get.toNamed("/registerScreen");
-                  }, child: Text(
-                    "¿No tienes cuenta? Registrate",
+                    Get.toNamed("/login");
+                  }, child: const Text(
+                    "¿Ya tienes cuenta? Inicia sesión",
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.black,
