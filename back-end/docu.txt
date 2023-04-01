@@ -1,0 +1,56 @@
+GET /raisers/get 
+Recibe String (raiser.id) por parametro
+Devuelve {raiser: (raiser - password)} o {raiser: null} si no existe
+
+POST /raisers/new
+Recibe raiser y lo guarda en la raisers collection, (lo devuelve for good meassure)
+
+POST /raisers/login
+Recibe {name: String, password: String}
+Devuelve {raiser: raiser}
+
+GET /crowdFund/get
+No recibe nada, ordena crowdFunds y los devuelve junto a su raiser en objetos: {crowdFund: crowdFund, raiser: raiser}
+
+POST /crowdFund/new
+Recibe {crowdFund: crowFund, raiser: raised}
+Crea contracto, lo guarda en crowdFunds collection y agrega crowFund.id a raiser.idOfCrowfunds[]
+Devuelve crowFund guardado.
+
+POST /crowdFund/donate
+Recibe {id(del contrato): String, contractAddress: String, senderAddres: String, donation: String (es eth OJO AL PIOJO)}
+Setea active a 0 si se llego al goal del contrato.
+Devuelve {amount: String}
+
+POST /crowdFund/getProgress
+Recibe {contactAddress: String}
+Devuelve progreso del contrato {amount: String}
+
+/////////////////Modelos////////////////////
+
+const schemaRaiser = new Schema({
+        id: String,
+        name: String,
+        password: String,
+        description: String,
+        contactInfo: String,
+        profileImage: String,
+        crowdFundsIds: [String],
+        address: String
+});
+
+const schemaCrowdFund = new Schema({
+        id: String,
+        active: Boolean,
+        title: String,
+        description: String,
+        receiverDescription: String,
+        goalAmount: Number,
+        deadline: Number,
+        images: [String],
+        resultImages: [String],
+        resultComments: String,
+        contractAddress: String,
+        receiverAddress: String,
+        idOfRaiser: String
+});

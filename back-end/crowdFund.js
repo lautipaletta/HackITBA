@@ -6,6 +6,15 @@ const modelCrowdFund = require("./models/crowdFundModel");
 
 const {createCrowfundingContract, addDonor, getCollectedAmount} = require("./smartcontracts/smartcontracts");
 
+router.get("/get", async function (req, res) {
+    let data = await modelCrowdFund.find({active: 1});
+    data = data.sort(String.compare(getCollectedAmount(a.address), getCollectedAmount(b.address)));
+    data.map(elem => {
+        return {crowdFund: elem, raiser: modelRaiser.findOne({id: elem.idOfRaiser})};
+    });
+    res.send(data);
+});
+
 router.post("/new", async function (req, res) {
     const data = req.body.crowdFund;
     const raiser = req.body.raiser;
@@ -17,23 +26,15 @@ router.post("/new", async function (req, res) {
     await crowdFund.save();
 
     const signer = await modelRaiser.findOne({id: raiser.id});
-    signer.crowdfundsIds.push(crowdFund.id);
+    signer.crowdFundsIds.push(crowdFund.id);
     await signer.save();
 
     res.send(data);
 });
 
-router.get("/get", async function (req, res) {
-    let data = await modelCrowdFund.find();
-    data = data.sort(String.compare(getCollectedAmount(a.address), getCollectedAmount(b.address))).slice(5);
-    data.map(elem => {
-        return {crowdFund: elem, raiser: modelRaiser.findOne({id: elem.idOfRaiser})};
-    });
-    res.send(data);
-});
-
 router.post("/donate", async function (req, res){
-    await addDonor(req.body.contractAddress, req.body.senderAddress, req.body.donation);
+    const excessFlag = await addDonor(req.body.contractAddress, req.body.senderAddress, req.body.donation);
+    if(excessFlag) await modelCrowdFund.findOneAndUpdate({id: req.body.id}, {active: 0});
     res.send({amount: await getCollectedAmount(req.body.contractAddress)});
 });
 
