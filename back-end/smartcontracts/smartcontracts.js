@@ -1,11 +1,11 @@
 const Web3 = require("web3");
 const fs = require("fs");
 
-const web3 = new Web3('http://localhost:8545');
+const web3 = new Web3('http://ganache:8545');
 
-const contractBytecode = fs.readFileSync("crowdfunding_sol_Crowdfund.bin").toString();
+const contractBytecode = fs.readFileSync("/app/smartcontracts/crowdfunding_sol_Crowdfund.bin").toString();
 
-const contractABIRaw = fs.readFileSync("crowdfunding_sol_Crowdfund.abi").toString();
+const contractABIRaw = fs.readFileSync("/app/smartcontracts/crowdfunding_sol_Crowdfund.abi").toString();
 const contractABI = JSON.parse(contractABIRaw);
 
 const crowdfundingContract = new web3.eth.Contract(contractABI);
