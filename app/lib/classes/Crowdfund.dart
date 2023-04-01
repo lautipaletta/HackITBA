@@ -1,14 +1,14 @@
 class Crowdfund {
   final String id;
-  bool active = true;
   final String title;
   final String description;
   final String receiver;
-  int goalAmount;
-  int collectedAmount = 0;
   final int deadline;
   // final Map<String, dynamic> billingInfo; // TODO Implement billing info
+  bool active = true;
   List<String> resultImagesUrls = [];
+  int goalAmount;
+  int collectedAmount = 0;
   String resultComments = "";
 
   Crowdfund({required this.title, required this.description, required this.receiver, required this.goalAmount,
