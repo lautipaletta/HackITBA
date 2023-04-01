@@ -9,18 +9,13 @@ class PersonalizedTextField extends StatelessWidget {
 
   final String title;
   final String textPlaceholder;
-  final IconData icon;
+  final IconData? icon;
   final TextEditingController controller;
   final int type;
 
 
   @override
   Widget build(BuildContext context) {
-
-    switch(type)
-    {
-
-    }
     return TextField(
       keyboardType: (type  == 0)? TextInputType.name : ( (type == 1)? TextInputType.emailAddress : TextInputType.visiblePassword),
       obscureText: (type==2),
