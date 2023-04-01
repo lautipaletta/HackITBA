@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.0.3
   http: ^0.13.5
   crypto: ^3.0.2
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
