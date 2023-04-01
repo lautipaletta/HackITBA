@@ -1,6 +1,7 @@
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               AppBarTextItem(text: "Inicio", onTap: (){}),
               AppBarTextItem(text: "Campañas", onTap: (){}),
-              AppBarTextItem(text: "Iniciar Sesión", onTap: (){}),
+              AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
               AppBarTextItem(text: "¿Qué es CollectApp?", onTap: (){}),
             ],
           ),
