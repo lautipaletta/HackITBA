@@ -24,8 +24,12 @@ router.post("/new", async function (req, res) {
 });
 
 router.get("/get", async function (req, res) {
-    const data = modelCrowdFund.find().sort(String.compare(getCollectedAmount(a.address), getCollectedAmount(b.address)));
-    res.send(data.slice(5));
+    let data = await modelCrowdFund.find();
+    data = data.sort(String.compare(getCollectedAmount(a.address), getCollectedAmount(b.address))).slice(5);
+    data.map(elem => {
+        return {crowdFund: elem, raiser: modelRaiser.findOne({id: elem.idOfRaiser})};
+    });
+    res.send(data);
 });
 
 router.post("/donate", async function (req, res){

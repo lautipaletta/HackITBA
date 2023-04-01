@@ -12,7 +12,8 @@ const schemaCrowdFund = new Schema({
         resultImages: [String],
         resultComments: String,
         contractAddress: String,
-        receiverAddress: String
+        receiverAddress: String,
+        idOfRaiser: String
 });
 
 const modelCrowdFund = new model("crowdFunds", schemaCrowdFund);

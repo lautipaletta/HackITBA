@@ -27,4 +27,4 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
     console.log("Request got");
     res.send("GET Request Called");
-})
+});
