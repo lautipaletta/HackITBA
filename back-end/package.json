@@ -1,0 +1,25 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Manages user and funds database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lautipaletta/HackITBA.git"
+  },
+  "author": "Augusto Barthelemy, Ignacio Searles, Lautaro Paletta, Valentin Garfi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lautipaletta/HackITBA/issues"
+  },
+  "homepage": "https://github.com/lautipaletta/HackITBA#readme",
+  "dependencies": {
+    "course": "^0.0.1",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "mongodb": "^5.1.0"
+  }
+}
