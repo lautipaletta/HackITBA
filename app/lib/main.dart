@@ -14,6 +14,10 @@ void main() {
         // GetPage(name: "/", page: () => HomeScreen()),
         // GetPage(name: "/", page: () => HomeScreen()),
       ],
+      theme: ThemeData(
+        fontFamily: "Poppins",
+      ),
+      debugShowCheckedModeBanner: false,
     )
   );
 }
