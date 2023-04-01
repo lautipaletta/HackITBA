@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  height: screenSize.height - 58,
+                  height: screenSize.height - 67,
                   width: screenSize.width,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(
@@ -48,9 +48,30 @@ class HomeScreen extends StatelessWidget {
                           ]
                       )
                   ),
-                  child: Row(
+                  child: Stack(
                     children: [
-                      SvgPicture.asset("assets/svg/home.svg"),
+                      SizedBox(
+                        height: screenSize.height - 67,
+                        width: screenSize.width / 2,
+                        child: Column(
+                          children: [
+                            Wrap(
+                              children: [
+                                Text("Donar de manera ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                                Text("segura ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
+                                Text("y ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                                Text("transparente ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
+                                Text("nunca fue tan fácil.", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: screenSize.width * 0.1,
+                        child: SvgPicture.asset("assets/svg/home.svg", width: screenSize.width / 2.5,),
+                      ),
                     ],
                   ),
                 )
