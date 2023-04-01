@@ -4,7 +4,7 @@ const router = express.Router();
 const modelRaiser = require("./models/raiserModel");
 
 router.get('/get', async function (req, res) {
-    const raiser = await modelRaiser.findOne({ id: req.query.id });
+    const raiser = await modelRaiser.findOne({ id: req.query.name });
     if (raiser) {
         const { password, ...response } = raiser._doc;
         res.send({ raiser: response });
@@ -14,7 +14,7 @@ router.get('/get', async function (req, res) {
 });
 
 router.post('/new', async function (req, res) {
-    const matches = modelRaiser.findOne({id: req.body.raiser.id});
+    const matches = await modelRaiser.exists({name: req.body.raiser.name});
     if (matches) {
         res.send({isMatch: true});
     } else {

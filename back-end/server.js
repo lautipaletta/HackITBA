@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://0.0.0.0:27017/crowdfunding");
+mongoose.connect("mongodb://mongo:27017/crowdfunding");
 
 const express = require("express");
 const raiserRouter = require("./raisers");

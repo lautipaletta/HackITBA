@@ -1,0 +1,16 @@
+POST http://localhost:3000/raiser/new HTTP/1.1
+content-type: application/json
+
+{
+    "raiser":
+    {
+   "id": "12312313",
+   "name": "AgenteX",
+   "description": "crackocaine",
+   "contactInfo": "a la vuelta de la quebrada",
+   "profileImage": "la mas fachera",
+   "crowdFundsIds": [],
+   "address": "0x9Ec3094c8F284B4c2C3c094E34eEeE53650fcAF9"
+    },
+    "password":"fa3igfb84rb380f3"
+}

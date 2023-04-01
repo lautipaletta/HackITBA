@@ -1,28 +1,25 @@
-FROM node:18.15 as base
+# Use an official Node runtime as a parent image
+FROM node:18.15
 
-WORKDIR /smartContract
+# Set the working directory to /app
+WORKDIR /app
 
-COPY smartContracts/ .
+# Copy the package.json and package-lock.json files to the working directory
+COPY back-end/package*.json .
 
-RUN npm install --global --quiet npm truffle ganache
-
-FROM base as truffle
-
-RUN truffle version
-
-WORKDIR /backEnd
-
-COPY back-end/ .
-
+# Install any needed dependencies
 RUN npm install
 
-EXPOSE 3000
+# Copy the rest of the application code to the working directory
+COPY back-end/ .
 
-CMD [ "npm", "start" ]
+# Set the environment variables
+ENV NODE_ENV=production
+ENV MONGODB_URI=mongodb://mongo:27017/crowdfunding
+ENV PORT=3000
 
-FROM base as ganache
+# Expose the port the app will run on
+EXPOSE $PORT
 
-EXPOSE 8545
-
-ENTRYPOINT ["ganache-cli"]
-
+# Start the app
+CMD ["npm", "start"]
