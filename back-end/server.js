@@ -18,15 +18,8 @@ app.use(express.json());
 app.use("/raiser", raiserRouter);
 app.use("/crowdfund", crowdfundRouter);
 
-const {modelCrowdFund} = require("./models/crowdFundModel");
-
 var port = 3000;
 
 app.listen(port, () => {
     console.log("Listening on port " + port);
-});
-
-app.get('/', (req, res) => {
-    console.log("Request got");
-    res.send("GET Request Called");
 });

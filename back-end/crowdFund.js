@@ -17,7 +17,7 @@ router.get("/get", async function (req, res) {
 
 router.get("/search", async function(req, res){
     const results = await modelCrowdFund.fuzzy(req.query.text);
-    res.send(results.sort((a, b) => (a.similarity>b.similarity)? -1 : 1 ).slice(3));
+    res.send(results.sort((a, b) => (a.similarity>b.similarity)? -1 : 1 ));
 });
 
 router.post("/new", async function (req, res) {
