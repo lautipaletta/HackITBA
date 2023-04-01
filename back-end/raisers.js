@@ -33,10 +33,12 @@ router.post('/login', async function (req, res) {
         const response = await modelRaiser.findOne({ name: name });
         if (raiser.password == password) {
             res.send({ raiser: response });
-            return;
+        }else{
+            res.send({ raiser: null });
         }
+    }else{
+        res.send({ raiser: null });
     }
-    res.send({ raiser: null });
 });
 
 module.exports = router;
