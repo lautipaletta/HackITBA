@@ -54,7 +54,7 @@ class BackendController extends GetxController {
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({"user": username, "password": sha256.convert(utf8.encode(password)).toString()}),
+        body: jsonEncode({"name": username, "password": sha256.convert(utf8.encode(password)).toString()}),
       );
       log(response.statusCode.toString());
       if(response.statusCode == 200){
