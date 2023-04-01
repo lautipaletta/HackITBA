@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     depends_on:
       - mongo
+      - ganache
     environment:
       NODE_ENV: production
       MONGODB_URI: mongodb://mongo:27017/crowdfunding

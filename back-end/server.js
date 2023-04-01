@@ -4,6 +4,7 @@ mongoose.connect("mongodb://mongo:27017/crowdfunding");
 
 const express = require("express");
 const raiserRouter = require("./raisers");
+const crowdfundRouter = require("./crowdFund");
 
 const cors = require("cors");
 const helmet = require("helmet");
@@ -15,6 +16,7 @@ app.use(helmet());
 app.use(express.json());
 
 app.use("/raiser", raiserRouter);
+app.use("/crowdfund", crowdfundRouter);
 
 var port = 3000;
 
