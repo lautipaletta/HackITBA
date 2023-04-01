@@ -13,3 +13,17 @@ campaña sea logrado. De esta manera las donaciones están protegidas de princip
 los contratos, como las transacciones ejecutadas son información pública.
 
 En caso de que el objetivo de la campaña no se cumpla a tiempo, el contrato efectua un reembolso automático.
+
+## Stack técnico
+
+### Frontend
+
+Flutter
+
+### Backend
+
+nodeJS, mongodb, web3js
+
+### Smart contracts
+
+solidity, truffle

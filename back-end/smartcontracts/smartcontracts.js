@@ -26,13 +26,27 @@ async function createCrowfundingContract(signerAddress, recipientAddress, amount
 
 async function addDonor(contractAddress, senderAddress, donationAmount) {
     const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+    const amountCollectedWei = web3.utils.toBN(await contract.methods.getBalance().call());
+    const targetAmountWei = web3.utils.toBN(await contract.methods.targetAmount().call());
+
+    let donationAmountWei = web3.utils.toBN(web3.utils.toWei(donationAmount));
+
+    let crowdfundingCompleted = false;
+    if (targetAmountWei.lte(amountCollectedWei.add(donationAmountWei))) {
+        donationAmountWei = targetAmountWei.sub(amountCollectedWei); 
+        crowdfundingCompleted = true;
+    }
+
     await contract.methods.addDonor().send({
         from: senderAddress,
-        value: web3.utils.toWei(donationAmount)
+        value: donationAmountWei 
     });
 
     await transferMoneyToRecipientIfAmountCollected(contractAddress, senderAddress);
-    checkExpirationDate(contractAddress, senderAddress);
+    await checkExpirationDate(contractAddress, senderAddress);
+
+    return crowdfundingCompleted;
 }
 
 async function checkExpirationDate(contractAddress, senderAddress) {

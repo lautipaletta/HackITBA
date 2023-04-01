@@ -1,5 +1,4 @@
-const { Schema, model, STATES } = require("mongoose");
-const {schemaCroudFund} = require("./crowdFundModel");
+const { Schema, model } = require("mongoose");
 
 const schemaRaiser = new Schema({
         id: String,
@@ -8,7 +7,7 @@ const schemaRaiser = new Schema({
         description: String,
         contactInfo: String,
         profileImage: String,
-        crowdfundsIds: [String],
+        crowdFundsIds: [String],
         address: String
 });
 

@@ -1,3 +1,4 @@
+const fuzzy = require("mongoose-fuzzy-search");
 const { Schema, model } = require("mongoose");
 
 const schemaCrowdFund = new Schema({
@@ -15,6 +16,8 @@ const schemaCrowdFund = new Schema({
         receiverAddress: String,
         idOfRaiser: String
 });
+
+schemaCrowdFund.plugin(fuzzy, {fields: {title_: "title"}});
 
 const modelCrowdFund = new model("crowdFunds", schemaCrowdFund);
 
