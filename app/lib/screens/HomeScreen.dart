@@ -3,6 +3,7 @@ import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CrowdfundCard.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
+import 'package:app/controllers/BackendController.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -81,7 +82,11 @@ class HomeScreen extends StatelessWidget {
                             ),
                             SizedBox(height: screenSize.height * 0.05,),
                             TextButton(
-                              onPressed: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut),
+                              onPressed: () async {
+                                // => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)
+                                // await BackendController.loginRaiser("lautaro", "1234");
+                                await BackendController.registerRaiser(Raiser(name: "ausdustus", description: "lauta", contactInfo: "123", profileImage: "https", address: "adasd"), "1234");
+                              },
                               style: ButtonStyle(
                                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
                                   padding: const MaterialStatePropertyAll(EdgeInsets.all(25.0)),
