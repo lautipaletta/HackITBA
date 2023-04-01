@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/classes/Raiser.dart';
+import 'package:app/controllers/AppController.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
@@ -18,30 +19,6 @@ class BackendController extends GetxController {
       }
     } catch (e) {
       log("Error in getRaiser(): ${e.toString()}");
-    }
-    return null;
-  }
-
-  static Future<Raiser?> newRaiser(Raiser raiser, String password) async {
-    try {
-      Map<String, dynamic> data = raiser.toJson();
-      data["password"] = sha256.convert(utf8.encode(password)).toString();
-      var response = await http.post(
-        Uri.parse("http://192.168.192.148:3000/newRaiser/"),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(data),
-      );
-      log(response.statusCode.toString());
-      if(response.statusCode == 200){
-        log(response.body);
-        return Raiser.fromJson(jsonDecode(response.body));
-      } else {
-        log("newRaiser() failed, status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      log("Error in newRaiser(): ${e.toString()}");
     }
     return null;
   }
@@ -73,7 +50,7 @@ class BackendController extends GetxController {
         "password": sha256.convert(utf8.encode(password)).toString(),
       };
       var response = await http.post(
-        Uri.parse("http://localhost:3000/raiser/new"),
+        Uri.parse("http://localhost:3000/raiser/new/"),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -104,5 +81,74 @@ class BackendController extends GetxController {
     }
     return [];
   }
+
+  static Future<Crowdfund?> newCrowdfund(Crowdfund crowdfund) async {
+    try {
+      Raiser raiser = Get.find<AppController>().loggedInRaiser!;
+      var data = {
+        "crowdFund": crowdfund.toJson(),
+        "raiser": raiser.toJson(),
+      };
+      var response = await http.post(
+        Uri.parse("http://localhost:3000/crowdFund/new/"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+      if(response.statusCode == 200){
+        raiser.crowdFundsIds.add(crowdfund.id);
+        Get.find<AppController>().updateLoggedInRaiserData(raiser);
+        return Crowdfund.fromJson(jsonDecode(response.body));
+      } else {
+        log("newCrowdfund() failed, status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error in newCrowdfund(): ${e.toString()}");
+    }
+    return null;
+  }
+
+  static Future<Crowdfund?> donate(String contractAddress, String senderAddress, String donation) async {
+    try {
+      var data = {
+        "id": DateTime.now().millisecondsSinceEpoch.toString(),
+        "contractAddress": contractAddress,
+        "senderAddress": senderAddress,
+        "donation": donation,
+      };
+      var response = await http.post(
+        Uri.parse("http://localhost:3000/crowdFund/donate/"),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+      if(response.statusCode == 200){
+        var data = jsonDecode(response.body);
+        int state = data["state"];
+        int amount = data["amount"];
+
+        AppController appController = Get.find<AppController>();
+
+        List<Crowdfund> crowdfunds = appController.crowdfunds;
+        int index = crowdfunds.indexWhere((element) => element.contractAddress == contractAddress);
+        Crowdfund crowdfund = crowdfunds.elementAt(index);
+        crowdfunds.removeAt(index);
+        crowdfund.collectedAmount = amount;
+        crowdfund.state = state;
+        crowdfunds.insert(index, crowdfund);
+        appController.updateCrowdfundsData(crowdfunds);
+        return crowdfund;
+      } else {
+        log("donate() failed, status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("Error in donate(): ${e.toString()}");
+    }
+    return null;
+  }
+
+
 
 }

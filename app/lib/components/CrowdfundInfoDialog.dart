@@ -104,58 +104,61 @@ class CrowdfundInfoDialog extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(40, 80, 40, 40),
               height: modalSize.height * 0.7,
               width: modalSize.width,
-              child: Column(
-                children: [
-                  SizedBox(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: modalSize.width * 0.6,
-                          child: const FittedBox(child: Text("Descripción de la campaña", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w500),))
-                        ),
-                        const SizedBox(width: 15,),
-                        const Expanded(child: FittedBox(child: Text("Quedan 6 dias para completar esta donación"))),
-                      ],
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: modalSize.width * 0.6,
+                            child: const FittedBox(child: Text("Descripción de la campaña", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w500),))
+                          ),
+                          const SizedBox(width: 15,),
+                          const Expanded(child: FittedBox(child: Text("Quedan 6 dias para completar esta donación"))),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 15,),
-                  SizedBox(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: modalSize.width * 0.6,
-                          child: const Text("Los perros del refugio N°4 de Parque Patricios necesitan asistencia de manera urgente. Carecen de alimento balancedo hace meses y algunos están enfermitos y requierien atención médica. Por eso, me gustaría poder cubrir la deuda que tiene la actual protectora de animales que los tiene a cargo para que puedan tener la vida digna que merecen.",
-                            textAlign: TextAlign.justify,),
-                        ),
-                        const SizedBox(width: 20,),
-                        Expanded(
-                          child: Container(
-                            width: modalSize.width * 0.25,
-                            height: modalSize.width * 0.15,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFE8FFD0),
-                              borderRadius: BorderRadius.circular(25.0)
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: const AssetImage("assets/png/cardImage.png"),
-                                  radius: modalSize.width * 0.04,
-                                ),
-                                const SizedBox(height: 5,),
-                                const Text("Juan Pérez", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
-                              ],
+                    const SizedBox(height: 15,),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: modalSize.width * 0.6,
+                            child: const Text("Los perros del refugio N°4 de Parque Patricios necesitan asistencia de manera urgente. Carecen de alimento balancedo hace meses y algunos están enfermitos y requierien atención médica. Por eso, me gustaría poder cubrir la deuda que tiene la actual protectora de animales que los tiene a cargo para que puedan tener la vida digna que merecen.",
+                              textAlign: TextAlign.justify,),
+                          ),
+                          const SizedBox(width: 20,),
+                          Expanded(
+                            child: Container(
+                              width: modalSize.width * 0.25,
+                              height: modalSize.width * 0.15,
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFE8FFD0),
+                                borderRadius: BorderRadius.circular(25.0)
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: const AssetImage("assets/png/cardImage.png"),
+                                    radius: modalSize.width * 0.04,
+                                  ),
+                                  const SizedBox(height: 5,),
+                                  const Text("Juan Pérez", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  // TODO Lugar para el boton
-                ],
+                    const Spacer(),
+                    // TODO Lugar para el boton
+                  ],
+                ),
               ),
             ),
           ],

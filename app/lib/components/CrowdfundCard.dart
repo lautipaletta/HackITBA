@@ -79,7 +79,7 @@ class CrowdfundCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                       Text(
-                        "$raiser, para ${crowdfund.receiver} - Quedan ${crowdfund.deadline} dias",
+                        "$raiser, para ${crowdfund.receiverDescription} - Quedan ${crowdfund.deadline} dias",
                         style: const TextStyle(
                           color: Color(0xFF857D7D),
                           fontSize: 8,

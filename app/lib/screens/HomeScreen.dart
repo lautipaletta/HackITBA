@@ -27,6 +27,14 @@ class HomeScreen extends StatelessWidget {
     return AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"));
   }
 
+  VoidCallback getCreateCrowdfundButtonAction(AppController appController){
+    if(appController.loggedInRaiser != null){
+      return () => Get.dialog(CreateCrowdfundDialog(imagePath: null));
+    } else {
+      return () => Get.toNamed("/login");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -155,46 +163,64 @@ class HomeScreen extends StatelessWidget {
                     alignment: WrapAlignment.spaceEvenly,
                     children: [
                       CrowdfundCard(crowdfund: Crowdfund(
+                        idOfRaiser: _appController.loggedInRaiser!.id,
+                        images: [],
+                        receiverAddress: "",
                         deadline: 3123125631,
                         description: "descripcion",
-                        goalAmount: 1000,
-                        receiver: "pepe",
+                        goalAmount: "1000",
+                        receiverDescription: "pepe",
                         title: "titulo",
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: () => Get.dialog(
                         CrowdfundInfoDialog(crowdfund: Crowdfund(
+                          idOfRaiser: _appController.loggedInRaiser!.id,
+                          images: [],
+                          receiverAddress: "",
                           deadline: 3123125631,
                           description: "descripcion",
-                          goalAmount: 1000,
-                          receiver: "pepe",
+                          goalAmount: "1000",
+                          receiverDescription: "pepe",
                           title: "Voy a donar cajas de alimentos balanceado al comedero N°4 de Parque Patricios",
                         )),
                       ),),
                       CrowdfundCard(crowdfund: Crowdfund(
+                        idOfRaiser: _appController.loggedInRaiser!.id,
+                        images: [],
+                        receiverAddress: "",
                         deadline: 3123125631,
                         description: "descripcion",
-                        goalAmount: 1000,
-                        receiver: "pepe",
+                        goalAmount: "1000",
+                        receiverDescription: "pepe",
                         title: "titulo",
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
+                        idOfRaiser: _appController.loggedInRaiser!.id,
+                        images: [],
+                        receiverAddress: "",
                         deadline: 3123125631,
                         description: "descripcion",
-                        goalAmount: 1000,
-                        receiver: "pepe",
+                        goalAmount: "1000",
+                        receiverDescription: "pepe",
                         title: "titulo",
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
+                        idOfRaiser: _appController.loggedInRaiser!.id,
+                        images: [],
+                        receiverAddress: "",
                         deadline: 3123125631,
                         description: "descripcion",
-                        goalAmount: 1000,
-                        receiver: "pepe",
+                        goalAmount: "1000",
+                        receiverDescription: "pepe",
                         title: "titulo",
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                       CrowdfundCard(crowdfund: Crowdfund(
+                        idOfRaiser: _appController.loggedInRaiser!.id,
+                        images: [],
+                        receiverAddress: "",
                         deadline: 3123125631,
                         description: "descripcion",
-                        goalAmount: 1000,
-                        receiver: "pepe",
+                        goalAmount: "1000",
+                        receiverDescription: "pepe",
                         title: "titulo",
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
                     ],
@@ -217,7 +243,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
                 ),
                 child: Center(
-                  child: AppBarTextItem(text: "Crear Colecta", onTap: () => Get.dialog(CreateCrowdfundDialog(imagePath: null)), fontSize: 22.0,),
+                  child: AppBarTextItem(text: "Crear Colecta", onTap: getCreateCrowdfundButtonAction(_appController), fontSize: 22.0,),
                 ),
               ),
             ),

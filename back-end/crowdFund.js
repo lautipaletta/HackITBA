@@ -20,18 +20,21 @@ router.get("/search", async function(req, res){
 router.post("/new", async function (req, res) {
     const data = req.body.crowdFund;
     const raiser = req.body.raiser;
+    try{
+	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
+	    data.contractAddress = contractAddress;
 
-    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
-    data.contractAddress = contractAddress;
+	    const crowdFund = new modelCrowdFund(data);
+	    await crowdFund.save();
 
-    const crowdFund = new modelCrowdFund(data);
-    await crowdFund.save();
+	    const signer = await modelRaiser.findOne({id: raiser.id});
+	    signer.crowdFundsIds.push(crowdFund.id);
+	    await signer.save();
 
-    const signer = await modelRaiser.findOne({id: raiser.id});
-    signer.crowdFundsIds.push(crowdFund.id);
-    await signer.save();
-
-    res.send(data);
+	    res.send(data);
+    }catch(err){
+    	res.status(404).send({error: err});
+    }
 });
 
 router.post("/donate", async function (req, res){
