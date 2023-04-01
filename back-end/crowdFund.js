@@ -9,9 +9,6 @@ const {createCrowfundingContract, addDonor, getCollectedAmount} = require("./sma
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({active: 1});
     data = data.sort(String.compare(getCollectedAmount(a.address), getCollectedAmount(b.address)));
-    data.map(elem => {
-        return {crowdFund: elem, raiser: modelRaiser.findOne({id: elem.idOfRaiser})};
-    });
     res.send(data);
 });
 
