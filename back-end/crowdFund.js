@@ -32,7 +32,7 @@ router.post("/new", async function (req, res) {
     signer.crowdFundsIds.push(crowdFund.id);
     await signer.save();
 
-    res.send(data);
+    res.send({collectedAmount: 0, ...data});
 });
 
 router.post("/donate", async function (req, res){
