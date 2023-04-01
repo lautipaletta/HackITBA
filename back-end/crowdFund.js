@@ -7,7 +7,7 @@ const modelCrowdFund = require("./models/crowdFundModel");
 const {createCrowfundingContract, addDonor, getCollectedAmount} = require("./smartcontracts/smartcontracts");
 
 router.get("/get", async function (req, res) {
-    let data = await modelCrowdFund.find({active: 1});
+    let data = await modelCrowdFund.find({state: 1});
     data = data.map(x => ({collectedAmount: getCollectedAmount(x.address), ...x}));
     data = data.sort(String.compare(a.collectedAmount, b.collectedAmount));
     res.send(data);
@@ -37,8 +37,10 @@ router.post("/new", async function (req, res) {
 
 router.post("/donate", async function (req, res){
     const excessFlag = await addDonor(req.body.contractAddress, req.body.senderAddress, req.body.donation);
-    if(excessFlag) await modelCrowdFund.findOneAndUpdate({id: req.body.id}, {active: 0});
-    res.send({amount: await getCollectedAmount(req.body.contractAddress)});
+    const crowdFund = await modelCrowdFund.findOne({id: req.body.id});
+    crowdFund.state = 1-excessFlag;
+    crowdFund.save();
+    res.send({amount: await getCollectedAmount(req.body.contractAddress), state: excessFlag});
 });
 
 router.post("/getProgress", async function (req, res){
