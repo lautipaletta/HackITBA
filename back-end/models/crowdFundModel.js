@@ -1,18 +1,20 @@
-/*const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const schemaCroudFund = new Schema({
+const schemaCrowdFund = new Schema({
         id: String,
         active: Boolean,
         title: String,
         description: String,
-        receiver: String,
+        receiverDescription: String,
         goalAmount: Number,
-        collectedAmount: Number,
         deadline: Number,
-        resultImagesUrls: [String],
+        images: [String],
+        resultImages: [String],
         resultComments: String,
+        contractAddress: String,
+        receiverAddress: String
 });
 
-const modelCrowdFund = new model("crowdFunds", schemaCroudFund);
+const modelCrowdFund = new model("crowdFunds", schemaCrowdFund);
 
-module.exports = modelCrowdFund;*/
+module.exports = modelCrowdFund;
