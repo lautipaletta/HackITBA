@@ -16,7 +16,7 @@ router.get('/get', async function (req, res) {
 router.post('/new', async function (req, res) {
     const matches = modelRaiser.findOne({id: req.body.id});
     if (matches) {
-        res.send({match: false});
+        res.send({match: true});
     } else {
         const raiser = new modelRaiser(req.body.raiser);
         raiser.password = req.body.password;
