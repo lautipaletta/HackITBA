@@ -130,6 +130,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   width: screenSize.width * 0.8,
                   child: Wrap(
+                    runSpacing: 40.0,
                     alignment: WrapAlignment.spaceEvenly,
                     children: [
                       CrowdfundCard(crowdfund: Crowdfund(
@@ -169,7 +170,8 @@ class HomeScreen extends StatelessWidget {
                       ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 100,),
               ],
             ),
           ),
