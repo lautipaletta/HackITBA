@@ -4,7 +4,7 @@
   "description": "Manages user and funds database.",
   "main": "index.js",
   "scripts": {
-    "test": "node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
