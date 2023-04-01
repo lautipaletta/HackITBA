@@ -1,6 +1,7 @@
 import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
+import 'package:app/components/CreateCrowfundDialog.dart';
 import 'package:app/components/CrowdfundCard.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:app/controllers/BackendController.dart';
@@ -202,7 +203,7 @@ class HomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(bottom: Radius.circular(30.0)),
                 ),
                 child: Center(
-                  child: AppBarTextItem(text: "Crear Colecta", onTap: (){}, fontSize: 22.0,),
+                  child: AppBarTextItem(text: "Crear Colecta", onTap: () => Get.dialog(CreateCrowfundDialog(imagePath: null)), fontSize: 22.0,),
                 ),
               ),
             ),
