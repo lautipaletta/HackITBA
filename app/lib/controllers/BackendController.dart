@@ -26,7 +26,7 @@ class BackendController extends GetxController {
   static Future<Raiser?> newRaiser(Raiser raiser, String password) async {
     try {
       Map<String, dynamic> data = raiser.toJson();
-      data["password"] = sha256.convert(utf8.encode(password));
+      data["password"] = sha256.convert(utf8.encode(password)).toString();
       var response = await http.post(
         Uri.parse("http://192.168.192.148:3000/newRaiser/"),
         headers: <String, String>{
