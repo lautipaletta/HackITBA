@@ -26,12 +26,10 @@ router.post('/new', async function (req, res) {
 });
 
 router.post('/login', async function (req, res) {
-    const name = req.body.name;
-    const password = req.body.password;
-    const exists = await modelRaiser.exists({ name: name });
+    const exists = await modelRaiser.exists({ name: req.body.name });
     if(exists){
-        const response = await modelRaiser.findOne({ name: name });
-        if (raiser.password == password) {
+        const response = await modelRaiser.findOne({ name: req.body.password });
+        if (response.password == password) {
             res.send({ raiser: response });
         }else{
             res.send({ raiser: null });
