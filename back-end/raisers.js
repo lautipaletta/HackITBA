@@ -16,12 +16,12 @@ router.get('/get', async function (req, res) {
 router.post('/new', async function (req, res) {
     const matches = modelRaiser.findOne({id: req.body.id});
     if (matches) {
-        res.send({match: true});
+        res.send({isMatch: true});
     } else {
         const raiser = new modelRaiser(req.body.raiser);
         raiser.password = req.body.password;
         await raiser.save();
-        res.send({match: false});
+        res.send({isMatch: false});
     }
 });
 
