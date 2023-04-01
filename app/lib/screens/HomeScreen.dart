@@ -85,8 +85,8 @@ class HomeScreen extends StatelessWidget {
                             TextButton(
                               onPressed: () async {
                                 // => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)
-                                // await BackendController.loginRaiser("lautaro", "1234");
-                                await BackendController.registerRaiser(Raiser(name: "ausdustus", description: "lauta", contactInfo: "123", profileImage: "https", address: "adasd"), "1234");
+                                await BackendController.loginRaiser("pedrin", "1234");
+                                // await BackendController.registerRaiser(Raiser(name: "pedrin", description: "lauta", contactInfo: "123", profileImage: "https", address: "adasd"), "1234");
                               },
                               style: ButtonStyle(
                                   backgroundColor: const MaterialStatePropertyAll(Colors.white),
