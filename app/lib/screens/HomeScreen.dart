@@ -1,15 +1,19 @@
 import 'package:app/components/AppBarTextItem.dart';
+import 'package:app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: PreferredSize(
         preferredSize: Size(screenSize.width, 1000),
         child: Container(
@@ -29,6 +33,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -45,44 +50,79 @@ class HomeScreen extends StatelessWidget {
                           ]
                       )
                   ),
-                  child: Stack(
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
                     children: [
-                      Positioned(
-                        bottom: 0,
-                        right: screenSize.width * 0.05,
-                        child: SvgPicture.asset("assets/svg/home.svg", width: screenSize.width / 2.5,),
-                      ),
                       SizedBox(
                         height: screenSize.height - 67,
-                        width: screenSize.width * 0.6,
+                        width: screenSize.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Wrap(
-                              children: const [
-                                FittedBox(child: Text("Donar de manera ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
-                                FittedBox(child: Text("segura ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),)),
-                                FittedBox(child: Text("y ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
-                                FittedBox(child: Text("transparente ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),)),
-                                FittedBox(child: Text("nunca fue tan fácil.", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),)),
-                              ],
+                            const Text.rich(
+                              TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(text: "Donar de manera ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                                    TextSpan(text: "segura ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
+                                    TextSpan(text: "y ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                                    TextSpan(text: "transparente ", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w500),),
+                                    TextSpan(text: "nunca fue tan fácil.", style: TextStyle(color: Colors.white, fontSize: 96.0, fontWeight: FontWeight.w300),),
+                                  ]
+                              ),
                             ),
                             SizedBox(height: screenSize.height * 0.05,),
                             TextButton(
-                              onPressed: (){},
+                              onPressed: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut),
                               style: ButtonStyle(
-                                backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                                padding: const MaterialStatePropertyAll(EdgeInsets.all(25.0)),
-                                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)))
+                                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
+                                  padding: const MaterialStatePropertyAll(EdgeInsets.all(25.0)),
+                                  shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)))
                               ),
                               child: const Text("Ver campañas", style: TextStyle(color: Colors.black54, fontSize: 24.0),),
                             ),
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: screenSize.height - 67,
+                        width: screenSize.width * 0.4,
+                        child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: SvgPicture.asset("assets/svg/home.svg", width: screenSize.width * 0.4)
+                        ),
+                      ),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(height: 200,),
+                SizedBox(
+                  width: screenSize.width,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: screenSize.width * 0.8,
+                        child: const Text.rich(
+                          TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(text: "Conectamos las ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w300)),
+                                TextSpan(text: "donaciones ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w500),),
+                                TextSpan(text: "de las personas en con otras interesadas en ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w300),),
+                                TextSpan(text: "colaborar ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w500),),
+                                TextSpan(text: ", de manera ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w300),),
+                                TextSpan(text: "simple ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w500),),
+                                TextSpan(text: "y sobre todo ", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w300),),
+                                TextSpan(text: "transparente.", style: TextStyle(fontSize: 64.0, fontWeight: FontWeight.w500),),
+                              ]
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 200,),
+                const Text("Donaciones vigentes en las que puedes colaborar", style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
+                const SizedBox(height: 200,),
               ],
             ),
           ),

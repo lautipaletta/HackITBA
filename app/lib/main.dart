@@ -9,7 +9,7 @@ void main() {
     GetMaterialApp(
       initialRoute: "/",
       getPages: [
-        GetPage(name: "/", page: () => const HomeScreen()),
+        GetPage(name: "/", page: () => HomeScreen()),
         GetPage(name: "/login", page: () => LoginScreen()),
         GetPage(name: "/register", page: () => RegisterScreen()),
         // GetPage(name: "/", page: () => HomeScreen()),
