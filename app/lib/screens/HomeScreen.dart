@@ -39,7 +39,6 @@ class HomeScreen extends StatelessWidget {
           SingleChildScrollView(
             controller: _scrollController,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
                   height: screenSize.height - appBarHeight,
@@ -105,60 +104,70 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 200,),
                 SizedBox(
-                  width: screenSize.width,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: screenSize.width * 0.8,
-                        child: const AutoSizeText.rich(
-                          TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(text: "Conectamos las ", style: TextStyle(fontWeight: FontWeight.w300)),
-                                TextSpan(text: "donaciones ", style: TextStyle(fontWeight: FontWeight.w500),),
-                                TextSpan(text: "de las personas en con otras interesadas en ", style: TextStyle(fontWeight: FontWeight.w300),),
-                                TextSpan(text: "colaborar ", style: TextStyle(fontWeight: FontWeight.w500),),
-                                TextSpan(text: ", de manera ", style: TextStyle(fontWeight: FontWeight.w300),),
-                                TextSpan(text: "simple ", style: TextStyle(fontWeight: FontWeight.w500),),
-                                TextSpan(text: "y sobre todo ", style: TextStyle(fontWeight: FontWeight.w300),),
-                                TextSpan(text: "transparente.", style: TextStyle(fontWeight: FontWeight.w500),),
-                              ]
-                          ),
-                          presetFontSizes: [
-                            64, 48, 32, 28, 22, 16
-                          ],
-                          textAlign: TextAlign.center,
-                        ),
-                      )
+                  width: screenSize.width * 0.8,
+                  child: const AutoSizeText.rich(
+                    TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(text: "Conectamos las ", style: TextStyle(fontWeight: FontWeight.w300)),
+                          TextSpan(text: "donaciones ", style: TextStyle(fontWeight: FontWeight.w500),),
+                          TextSpan(text: "de las personas en con otras interesadas en ", style: TextStyle(fontWeight: FontWeight.w300),),
+                          TextSpan(text: "colaborar ", style: TextStyle(fontWeight: FontWeight.w500),),
+                          TextSpan(text: ", de manera ", style: TextStyle(fontWeight: FontWeight.w300),),
+                          TextSpan(text: "simple ", style: TextStyle(fontWeight: FontWeight.w500),),
+                          TextSpan(text: "y sobre todo ", style: TextStyle(fontWeight: FontWeight.w300),),
+                          TextSpan(text: "transparente.", style: TextStyle(fontWeight: FontWeight.w500),),
+                        ]
+                    ),
+                    presetFontSizes: [
+                      64, 48, 32, 28, 22, 16
                     ],
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 200,),
                 const Text("Donaciones vigentes en las que puedes colaborar", style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.w400), textAlign: TextAlign.center,),
                 const SizedBox(height: 100,),
                 SizedBox(
-                  width: screenSize.width,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CrowdfundCard(crowdfund: Crowdfund(
-                          deadline: 3123125631,
-                          description: "descripcion",
-                          goalAmount: 1000,
-                          receiver: "pepe",
-                          title: "titulo",
-                        ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
-                        const SizedBox(width: 100,),
-                        CrowdfundCard(crowdfund: Crowdfund(
-                          deadline: 3123125631,
-                          description: "descripcion",
-                          goalAmount: 1000,
-                          receiver: "pepe",
-                          title: "titulo",
-                        ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
-                      ],
-                    ),
+                  width: screenSize.width * 0.8,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    children: [
+                      CrowdfundCard(crowdfund: Crowdfund(
+                        deadline: 3123125631,
+                        description: "descripcion",
+                        goalAmount: 1000,
+                        receiver: "pepe",
+                        title: "titulo",
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      CrowdfundCard(crowdfund: Crowdfund(
+                        deadline: 3123125631,
+                        description: "descripcion",
+                        goalAmount: 1000,
+                        receiver: "pepe",
+                        title: "titulo",
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      CrowdfundCard(crowdfund: Crowdfund(
+                        deadline: 3123125631,
+                        description: "descripcion",
+                        goalAmount: 1000,
+                        receiver: "pepe",
+                        title: "titulo",
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      CrowdfundCard(crowdfund: Crowdfund(
+                        deadline: 3123125631,
+                        description: "descripcion",
+                        goalAmount: 1000,
+                        receiver: "pepe",
+                        title: "titulo",
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                      CrowdfundCard(crowdfund: Crowdfund(
+                        deadline: 3123125631,
+                        description: "descripcion",
+                        goalAmount: 1000,
+                        receiver: "pepe",
+                        title: "titulo",
+                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png"),
+                    ],
                   ),
                 )
               ],
