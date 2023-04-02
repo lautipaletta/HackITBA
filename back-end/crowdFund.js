@@ -40,7 +40,7 @@ router.post("/new", async function (req, res) {
 	    signer.crowdFundsIds.push(crowdFund.id);
 	    await signer.save();
 
-	    res.send({ collectedAmount: 0, ...data });
+	    res.send({ collectedAmount: "0", ...data });
     }catch(err){
     	res.status(404).send({error: err});
     }

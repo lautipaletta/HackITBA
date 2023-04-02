@@ -27,3 +27,18 @@ nodeJS, mongodb, web3js
 ### Smart contracts
 
 solidity, truffle
+
+## Instrucciones de instalación
+
+Prerequisitos:
+
+* Docker
+
+1) Clonar la repo.
+2) Ejecutar
+
+```
+docker-compose up
+```
+
+Por defecto la aplicación web se hostea en el puerto 3000, la base de datos en el puerto 27017 y la test net en el puerto 8545.
