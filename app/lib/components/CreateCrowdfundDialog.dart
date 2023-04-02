@@ -294,7 +294,7 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                   goalAmount: goalAmountController.value.text,
                                   deadline: int.parse(dateController.value.text),
                                   receiverAddress: addressController.value.text,
-                                  images: [bytesFile.toString(),],
+                                  images: "",
                                   idOfRaiser: _appController.loggedInRaiser!.id,
                               );
                               Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund, bytesFile!, filename!);

@@ -74,7 +74,9 @@ class BackendController extends GetxController {
     try {
       var response = await http.get(Uri.parse("http://localhost:3000/crowdFund/get"),);
       if(response.statusCode == 200){
+        log(response.body);
         List<Crowdfund> crowdfunds = (jsonDecode(response.body) as List<dynamic>).map((e) => Crowdfund.fromJson(e)).toList();
+        log(crowdfunds.length.toString());
         return crowdfunds;
       } else {
         log("getCrowdfund() failed, status code: ${response.statusCode}");

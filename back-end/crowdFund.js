@@ -19,16 +19,18 @@ router.get("/get", async function (req, res) {
 
     data = await modelCrowdFund.find({ state: 1 });
 
+    console.log(data.length);
+    
     let dataOut = [];
     for (let i = 0; i < data.length; i++) {
         try{
-        dataOut.push({...data[i]._doc, collectedAmount: await getCollectedAmount(data[i].contractAddress)});
+        dataOut.push({ ...data[i]._doc}); //collectedAmount: await getCollectedAmount(data[i].contractAddress),
         }catch(err){
-            res.status(404).send({error: err});
+            return res.status(404).send({error: err});
         }
     }
-
-    dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
+    console.log(dataOut);
+    //dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
     res.send(dataOut);
 });
 
