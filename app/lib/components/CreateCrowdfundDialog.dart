@@ -25,7 +25,7 @@ class MyController extends GetxController {
 }
 
 class CreateCrowdfundDialog extends StatelessWidget {
-  CreateCrowdfundDialog({super.key, this.imagePath});
+  CreateCrowdfundDialog({super.key});
 
   final Rx<TextEditingController> nameController = TextEditingController().obs;
   final Rx<TextEditingController> descriptionController =
@@ -40,8 +40,8 @@ class CreateCrowdfundDialog extends StatelessWidget {
 
   final AppController _appController = Get.find<AppController>();
 
-  final String? imagePath;
   Uint8List? bytesFile;
+  String? filename;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,6 @@ class CreateCrowdfundDialog extends StatelessWidget {
     final nextMonth = DateTime(now.year, now.month + 1, now.day);
     final formattedDate =
         "${nextMonth.day}-${nextMonth.month}-${nextMonth.year}";
-    var pickedFile;
 
     return CustomDialog(
       width: screenSize.width * 0.6,
@@ -69,8 +68,10 @@ class CreateCrowdfundDialog extends StatelessWidget {
                   return GestureDetector(
                     onTap: () async {
                       bytesFile = await ImagePickerWeb.getImageAsBytes();
-                      if (bytesFile != null) controller.changeFilePickedState();
-                      log("Bytes vale $bytesFile");
+                      if (bytesFile != null){
+                        controller.changeFilePickedState();
+                        filename = (await ImagePickerWeb.getImageInfo)!.fileName;
+                      }
                     },
                     child: controller.filePicked
                         ? Container(
@@ -295,7 +296,7 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                   images: [bytesFile.toString(),],
                                   idOfRaiser: _appController.loggedInRaiser!.id,
                               );
-                              Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund);
+                              Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund, bytesFile!, filename!);
                               if(newCrowdfund != null){
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                   // ignore: prefer_const_constructors

@@ -1,6 +1,7 @@
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/classes/Raiser.dart';
 import 'package:app/components/CustomDialog.dart';
+import 'package:app/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -146,7 +147,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       CircleAvatar(
-                                        backgroundImage: const AssetImage("assets/png/cardImage.png"),
+                                        backgroundImage: NetworkImage("$HOST${raiser.profileImage}"),
                                         radius: modalSize.width * 0.04,
                                       ),
                                       const SizedBox(height: 5,),

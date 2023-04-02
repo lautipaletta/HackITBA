@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:app/components/CrowdfundDonateDialog.dart';
+import 'package:app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:app/classes/Crowdfund.dart';
+import 'package:get/get.dart';
 
 class CrowdfundCard extends StatelessWidget {
   const CrowdfundCard({super.key, required this.crowdfund, required this.onTap});
@@ -41,7 +45,7 @@ class CrowdfundCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"), // TODO Poner imagen de la campaña
+                Image.network("$HOST${crowdfund.images[0]}"),
                 Text(
                   crowdfund.title,
                   style: const TextStyle(
@@ -114,8 +118,10 @@ class CrowdfundCard extends StatelessWidget {
                   ],
                 ),
                 TextButton(
-
-                  onPressed: (){},
+                  onPressed: () async {
+                    var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
+                    if(result != null) log("hola!!");
+                  },
                   style: TextButton.styleFrom(
                     elevation: 2,
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
