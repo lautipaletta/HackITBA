@@ -6,7 +6,7 @@ const modelCrowdFund = require("./models/crowdFundModel");
 
 const saveImage = require("./images");
 
-const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpirationDate } = require("./smartcontracts/smartcontracts");
+const { createCrowfundingContract, addDonor, getCollectedAmount } = require("./smartcontracts/smartcontracts");
 
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({ state: 1 });
