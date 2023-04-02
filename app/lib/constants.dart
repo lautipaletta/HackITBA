@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const HOST = "http://localhost:3000";
+const HOST = "";
 
 const TextStyle appBarTextStyle = TextStyle(
   fontSize: 18.0,

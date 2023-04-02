@@ -18,6 +18,7 @@ app.use(express.json({limit: "10mb", extended: true}));
 app.use("/raiser", raiserRouter);
 app.use("/crowdfund", crowdfundRouter);
 
+app.use("/", express.static("./web"));
 app.use("/images", express.static("./images"));
 
 var port = 3000;
