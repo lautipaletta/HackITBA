@@ -38,10 +38,12 @@ Prerequisitos:
 1) Clonar la repo.
 2) Ejecutar
 
+Ejecutar desde el directorio principal.
 ```
 docker-compose up
 ```
 
+Ejecutar desde el directorio app.
 ```
 flutter run
 ```
