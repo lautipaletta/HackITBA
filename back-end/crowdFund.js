@@ -4,6 +4,8 @@ const router = express.Router();
 const modelRaiser = require("./models/raiserModel");
 const modelCrowdFund = require("./models/crowdFundModel");
 
+const saveImage = require("./images");
+
 const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpirationDate } = require("./smartcontracts/smartcontracts");
 
 router.get("/get", async function (req, res) {
@@ -37,6 +39,7 @@ router.post("/new", async function (req, res) {
     try{
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
 	    data.contractAddress = contractAddress;
+        data.images = [saveImage(req.body.image)];
 
 	    const crowdFund = new modelCrowdFund(data);
 	    await crowdFund.save();

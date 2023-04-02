@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const modelRaiser = require("./models/raiserModel");
+const saveImage = require("./images");
 
 router.get('/get', async function (req, res) {
     const raiser = await modelRaiser.findOne({ id: req.query.name });
@@ -20,6 +21,7 @@ router.post('/new', async function (req, res) {
     } else {
         const raiser = new modelRaiser(req.body.raiser);
         raiser.password = req.body.password;
+        raiser.profileImage = saveImage(req.body.image);
         await raiser.save();
         res.send({isMatch: false});
     }
