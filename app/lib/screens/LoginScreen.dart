@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                               Raiser? raiser = await BackendController.loginRaiser(username, password);
                               if(raiser != null){
                                 await SharedPreferencesController.saveRaiserData(raiser);
-                                Get.toNamed("/");
+                                Get.offAllNamed("/");
                               } else {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                           )),
                         const SizedBox(height: 14,),
                         TextButton(onPressed: (){
-                          Get.toNamed("/register");
+                          Get.offAllNamed("/register");
                         }, child: const Text(
                           "¿No tienes cuenta? Registrate",
                           style: TextStyle(

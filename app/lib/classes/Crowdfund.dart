@@ -14,14 +14,14 @@ class Crowdfund {
   List<String> resultImages = [];
   String resultComments = "";
   String? contractAddress;
-  int collectedAmount = 0;
+  String collectedAmount = "0";
 
   Crowdfund({required this.title, required this.description, required this.receiverDescription, required this.goalAmount,
   required this.deadline, required this.receiverAddress, required this.images, required this.idOfRaiser}) : id = DateTime.now().millisecondsSinceEpoch.toString();
 
   Crowdfund.fromJson(Map<String, dynamic> json) : id = json["id"], state = json["state"], title = json["title"], description = json["description"],
-        receiverDescription = json["receiverDescription"], goalAmount = json["goalAmount"], deadline = json["deadline"], images = json["images"], contractAddress = json["contractAddress"],
-        resultImages = json["resultImages"], resultComments = json["resultComments"], receiverAddress = json["receiverAddress"], idOfRaiser = json["idOfRaiser"], collectedAmount = json["collectedAmount"];
+        receiverDescription = json["receiverDescription"], goalAmount = json["goalAmount"], deadline = json["deadline"], images = (json["images"] as List<dynamic>).map((e) => e.toString()).toList(), contractAddress = json["contractAddress"],
+        resultImages = (json["resultImages"] as List<dynamic>).map((e) => e.toString()).toList(), resultComments = json["resultComments"], receiverAddress = json["receiverAddress"], idOfRaiser = json["idOfRaiser"], collectedAmount = json["collectedAmount"];
 
   Map<String, dynamic> toJson(){
     return {
@@ -29,7 +29,7 @@ class Crowdfund {
       "state": state,
       "title": title,
       "description": description,
-      "receiver": receiverDescription,
+      "receiverDescription": receiverDescription,
       "goalAmount": goalAmount,
       "deadline": deadline,
       "resultImages": resultImages,

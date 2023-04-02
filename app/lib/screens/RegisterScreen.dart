@@ -118,7 +118,7 @@ class RegisterScreen extends StatelessWidget {
                         Raiser raiser = Raiser(name: name, description: description, contactInfo: contactInfo, profileImage: bytesFile.toString(), address: address);
                         bool result = await BackendController.registerRaiser(raiser, password1);
                         if(result){
-                          Get.toNamed("/login");
+                          Get.offAllNamed("/login");
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -155,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 14,),
                   TextButton(onPressed: (){
-                    Get.toNamed("/login");
+                    Get.offAllNamed("/login");
                   }, child: const Text(
                     "¿Ya tienes cuenta? Inicia sesión",
                     style: TextStyle(

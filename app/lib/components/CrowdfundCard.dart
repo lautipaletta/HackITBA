@@ -9,11 +9,9 @@ double randomNumber = random.nextDouble(); // lo uso solo para poder asignarle v
 class CrowdfundCard extends StatelessWidget {
   CrowdfundCard({
     super.key,
-    required this.crowdfund, required this.raiser, required this.imageHolder, required this.onTap});
+    required this.crowdfund, required this.onTap});
 
     final Crowdfund crowdfund;
-    final String raiser; // El nombre de la persona que inició la donación
-    final String imageHolder;
     final VoidCallback onTap;
 
     Color valueColor = randomNumber < 0.1
@@ -44,7 +42,7 @@ class CrowdfundCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(imageHolder),
+                Image.asset(crowdfund.images[0]),
                 Text(
                   crowdfund.title,
                   style: const TextStyle(
@@ -79,7 +77,7 @@ class CrowdfundCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                       Text(
-                        "$raiser, para ${crowdfund.receiverDescription} - Quedan ${crowdfund.deadline} dias",
+                        "Colecta para ${crowdfund.receiverDescription} - Quedan ${crowdfund.deadline} dias",
                         style: const TextStyle(
                           color: Color(0xFF857D7D),
                           fontSize: 8,

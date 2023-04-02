@@ -15,16 +15,20 @@ class HomeScreen extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   final AppController _appController = Get.find<AppController>();
 
-  Widget getLogInButton(AppController appController){
+  List<Widget> getLogInButton(AppController appController, Size screenSize){
     if(appController.loggedInRaiser == null){
-      return Column(
-        children: [
-          AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-          AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
-        ],
-      );
+      return [
+        AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+        AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+        AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
+        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
+      ];
     }
-    return AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"));
+    return [
+      AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+      AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
+      AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
+    ];
   }
 
   VoidCallback getCreateCrowdfundButtonAction(AppController appController){
@@ -33,6 +37,16 @@ class HomeScreen extends StatelessWidget {
     } else {
       return () => Get.toNamed("/login");
     }
+  }
+
+  List<Widget> buildCrowdfundsCards(List<Crowdfund> crowdfunds){
+    List<Widget> list = [];
+    for(Crowdfund crowdfund in crowdfunds){
+      list.add(
+        CrowdfundCard(crowdfund: crowdfund, onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund),),),
+      );
+    }
+    return list;
   }
 
   @override
@@ -46,20 +60,14 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           color: Colors.white,
           padding: const EdgeInsets.all(20.0),
-          child: Wrap(
-            alignment: WrapAlignment.spaceEvenly,
-            children: [
-              const SizedBox(),
-              AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
-              AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
-              GetBuilder<AppController>(
-                init: _appController,
-                builder: (controller){
-                  return getLogInButton(controller);
-                },
-              ),
-              const SizedBox(),
-            ],
+          child: GetBuilder<AppController>(
+            init: _appController,
+            builder: (controller){
+              return Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                children: getLogInButton(controller, screenSize),
+              );
+            },
           ),
         ),
       ),
@@ -158,72 +166,15 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 100,),
                 SizedBox(
                   width: screenSize.width * 0.8,
-                  child: Wrap(
-                    runSpacing: 40.0,
-                    alignment: WrapAlignment.spaceEvenly,
-                    children: [
-                      CrowdfundCard(crowdfund: Crowdfund(
-                        idOfRaiser: _appController.loggedInRaiser!.id,
-                        images: [],
-                        receiverAddress: "",
-                        deadline: 3123125631,
-                        description: "descripcion",
-                        goalAmount: "1000",
-                        receiverDescription: "pepe",
-                        title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: () => Get.dialog(
-                        CrowdfundInfoDialog(crowdfund: Crowdfund(
-                          idOfRaiser: _appController.loggedInRaiser!.id,
-                          images: [],
-                          receiverAddress: "",
-                          deadline: 3123125631,
-                          description: "descripcion",
-                          goalAmount: "1000",
-                          receiverDescription: "pepe",
-                          title: "Voy a donar cajas de alimentos balanceado al comedero N°4 de Parque Patricios",
-                        )),
-                      ),),
-                      CrowdfundCard(crowdfund: Crowdfund(
-                        idOfRaiser: _appController.loggedInRaiser!.id,
-                        images: [],
-                        receiverAddress: "",
-                        deadline: 3123125631,
-                        description: "descripcion",
-                        goalAmount: "1000",
-                        receiverDescription: "pepe",
-                        title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
-                      CrowdfundCard(crowdfund: Crowdfund(
-                        idOfRaiser: _appController.loggedInRaiser!.id,
-                        images: [],
-                        receiverAddress: "",
-                        deadline: 3123125631,
-                        description: "descripcion",
-                        goalAmount: "1000",
-                        receiverDescription: "pepe",
-                        title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
-                      CrowdfundCard(crowdfund: Crowdfund(
-                        idOfRaiser: _appController.loggedInRaiser!.id,
-                        images: [],
-                        receiverAddress: "",
-                        deadline: 3123125631,
-                        description: "descripcion",
-                        goalAmount: "1000",
-                        receiverDescription: "pepe",
-                        title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
-                      CrowdfundCard(crowdfund: Crowdfund(
-                        idOfRaiser: _appController.loggedInRaiser!.id,
-                        images: [],
-                        receiverAddress: "",
-                        deadline: 3123125631,
-                        description: "descripcion",
-                        goalAmount: "1000",
-                        receiverDescription: "pepe",
-                        title: "titulo",
-                      ), raiser: "Juan Pérez", imageHolder: "assets/png/cardImage.png", onTap: (){},),
-                    ],
+                  child: GetBuilder<AppController>(
+                    init: _appController,
+                    builder: (controller){
+                      return Wrap(
+                        runSpacing: 40.0,
+                        alignment: WrapAlignment.spaceEvenly,
+                        children: buildCrowdfundsCards(controller.crowdfunds),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 100,),

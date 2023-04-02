@@ -96,10 +96,13 @@ class BackendController extends GetxController {
         },
         body: jsonEncode(data),
       );
+      log(response.body);
       if(response.statusCode == 200){
         raiser.crowdFundsIds.add(crowdfund.id);
         Get.find<AppController>().updateLoggedInRaiserData(raiser);
-        return Crowdfund.fromJson(jsonDecode(response.body)); // TODO Agregar y actualizar los crowdfunds en la lista del appcontroller
+        Crowdfund updatedCrowdfund = Crowdfund.fromJson(jsonDecode(response.body));
+        Get.find<AppController>().addCrowdfundData(updatedCrowdfund);
+        return updatedCrowdfund;
       } else {
         log("newCrowdfund() failed, status code: ${response.statusCode}");
       }
@@ -127,7 +130,7 @@ class BackendController extends GetxController {
       if(response.statusCode == 200){
         var data = jsonDecode(response.body);
         int state = data["state"];
-        int amount = data["amount"];
+        String amount = data["amount"];
 
         AppController appController = Get.find<AppController>();
 

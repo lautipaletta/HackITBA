@@ -12,8 +12,7 @@ class BasicTextField extends StatelessWidget {
   final Icon? icon;
   final int type;
   final Rx<TextEditingController> controller;
-  Rx<String> dateSelected = "".obs;
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +30,7 @@ class BasicTextField extends StatelessWidget {
           .then((selectedDate) {
             //TODO: handle selected date
             if(selectedDate!=null){
-              dateSelected.value = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
-              controller.value.text = dateSelected.value;
+              controller.value.text = selectedDate.millisecondsSinceEpoch.toString();
             }
         })
           ,

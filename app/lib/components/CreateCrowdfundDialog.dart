@@ -1,8 +1,11 @@
 import 'dart:developer';
 import 'dart:typed_data';
+import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/BasicTextField.dart';
 import 'package:app/components/CustomDialog.dart';
 import 'package:app/components/PersonalizedTextField.dart';
+import 'package:app/controllers/AppController.dart';
+import 'package:app/controllers/BackendController.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,7 +37,8 @@ class CreateCrowdfundDialog extends StatelessWidget {
       TextEditingController().obs;
   final Rx<TextEditingController> goalAmountController =
       TextEditingController().obs;
-  //final controller = Get.put(MyController());
+
+  final AppController _appController = Get.find<AppController>();
 
   final String? imagePath;
   Uint8List? bytesFile;
@@ -116,7 +120,8 @@ class CreateCrowdfundDialog extends StatelessWidget {
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 35, vertical: 5),
                   child: Column(
                     children: [
                       SizedBox(
@@ -278,21 +283,33 @@ class CreateCrowdfundDialog extends StatelessWidget {
                             type: 1),
                       ),
                       TextButton(
-                          onPressed: () {
-                            if (nameController.value.text.isNotEmpty &&
-                                bytesFile != null &&
-                                goalAmountController.value.text != null &&
-                                dateController.value.text.isNotEmpty &&
-                                nameReceptorController.value.text.isNotEmpty &&
-                                addressController.value.text.isNotEmpty &&
-                                descriptionController.value.text.isNotEmpty) {
-                              Get.back();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                // ignore: prefer_const_constructors
-                                content: Text("Campaña guardada correctamente",
-                                    textAlign: TextAlign.center),
-                              ));
+                          onPressed: () async {
+                            if (nameController.value.text.isNotEmpty && bytesFile != null && goalAmountController.value.text != null && dateController.value.text.isNotEmpty && nameReceptorController.value.text.isNotEmpty && addressController.value.text.isNotEmpty && descriptionController.value.text.isNotEmpty) {
+                              Crowdfund crowdfund = Crowdfund(
+                                  title: nameController.value.text,
+                                  description: descriptionController.value.text,
+                                  receiverDescription: nameReceptorController.value.text,
+                                  goalAmount: goalAmountController.value.text,
+                                  deadline: int.parse(dateController.value.text),
+                                  receiverAddress: addressController.value.text,
+                                  images: [bytesFile.toString(),],
+                                  idOfRaiser: _appController.loggedInRaiser!.id,
+                              );
+                              Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund);
+                              if(newCrowdfund != null){
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  // ignore: prefer_const_constructors
+                                  content: Text("Colecta creada correctamente",
+                                      textAlign: TextAlign.center),
+                                ));
+                                Get.back();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  // ignore: prefer_const_constructors
+                                  content: Text("No se pudo crear la colecta, intenta nuevamente.",
+                                      textAlign: TextAlign.center),
+                                ));
+                              }
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
