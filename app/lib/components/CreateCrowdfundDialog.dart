@@ -67,10 +67,11 @@ class CreateCrowdfundDialog extends StatelessWidget {
                 builder: (controller) {
                   return GestureDetector(
                     onTap: () async {
-                      bytesFile = await ImagePickerWeb.getImageAsBytes();
+                      var data = await ImagePickerWeb.getImageInfo;
+                      bytesFile = data!.data;
                       if (bytesFile != null){
                         controller.changeFilePickedState();
-                        filename = (await ImagePickerWeb.getImageInfo)!.fileName;
+                        filename = data.fileName;
                       }
                     },
                     child: controller.filePicked

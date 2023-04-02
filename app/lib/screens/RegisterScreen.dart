@@ -95,9 +95,9 @@ class RegisterScreen extends StatelessWidget {
                             return Row(
                               children: [
                                 TextButton(onPressed: () async {
-                                  bytesFile = await ImagePickerWeb.getImageAsBytes();
-                                  if (bytesFile != null) filename = (await ImagePickerWeb.getImageInfo)!.fileName;
-                                  log("Bytes vale $bytesFile");
+                                  var data = (await ImagePickerWeb.getImageInfo);
+                                  bytesFile = data!.data;
+                                  if (bytesFile != null) filename = data.fileName;
                                 }, child: const Text("Cargar imagen de perfil")),
                                 Text( (controller.filePicked) ? "Imagen seleccionada." : "" ),
                               ],

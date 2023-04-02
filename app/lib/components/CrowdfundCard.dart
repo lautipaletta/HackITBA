@@ -127,8 +127,7 @@ class CrowdfundCard extends StatelessWidget {
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
                     backgroundColor: const Color(0xFF4D5D67)
                   ),
-                  child:
-                  const SizedBox(
+                  child: const SizedBox(
                     width: double.infinity,
                     child: Text(
                       "Quiero donar",
@@ -139,8 +138,8 @@ class CrowdfundCard extends StatelessWidget {
                         color: Colors.white
                       ),
                       ),
-                  )
-                  )
+                  ),
+                ),
               ]
               ),
           ),

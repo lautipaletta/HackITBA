@@ -36,7 +36,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                     width: modalSize.width,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-                      child: Image.asset("assets/jpg/crowdfund.jpg", fit: BoxFit.fitWidth,),
+                      child: Image.network("$HOST${crowdfund.images[0]}", fit: BoxFit.fitWidth,),
                     )
                   ),
                   Container(
