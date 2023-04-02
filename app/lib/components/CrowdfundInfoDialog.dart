@@ -33,7 +33,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                     width: modalSize.width,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-                      child: Image.asset("assets/jpg/crowdfund.jpg", fit: BoxFit.fitWidth,)
+                      child: Image.asset("assets/jpg/crowdfund.jpg", fit: BoxFit.fitWidth,),
                     )
                   ),
                   Container(
@@ -64,13 +64,13 @@ class CrowdfundInfoDialog extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const AutoSizeText.rich(
+                            AutoSizeText.rich(
                               TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(text: "Se han donado ", style: TextStyle(fontWeight: FontWeight.w300),),
-                                  TextSpan(text: "\$23456,46 ", style: TextStyle(fontWeight: FontWeight.w500),),
-                                  TextSpan(text: "de ", style: TextStyle(fontWeight: FontWeight.w300),),
-                                  TextSpan(text: "\$40000 ", style: TextStyle(fontWeight: FontWeight.w500),),
+                                  const TextSpan(text: "Se han donado ", style: TextStyle(fontWeight: FontWeight.w300),),
+                                  TextSpan(text: "\$${crowdfund.collectedAmount} ", style: const TextStyle(fontWeight: FontWeight.w500),),
+                                  const TextSpan(text: "de ", style: TextStyle(fontWeight: FontWeight.w300),),
+                                  TextSpan(text: "\$${crowdfund.goalAmount} ", style: const TextStyle(fontWeight: FontWeight.w500),),
                                 ]
                               ),
                               minFontSize: 12,
@@ -89,7 +89,6 @@ class CrowdfundInfoDialog extends StatelessWidget {
                                   minHeight: 10,
                                   value: 0.7,
                                 ),
-
                               ),
                             ),
                           ],
@@ -104,61 +103,86 @@ class CrowdfundInfoDialog extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(40, 80, 40, 40),
               height: modalSize.height * 0.7,
               width: modalSize.width,
-              child: SingleChildScrollView(
+              child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: modalSize.width * 0.6,
-                            child: const FittedBox(child: Text("Descripción de la campaña", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w500),))
-                          ),
-                          const SizedBox(width: 15,),
-                          const Expanded(child: FittedBox(child: Text("Quedan 6 dias para completar esta donación"))),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15,),
-                    SizedBox(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: modalSize.width * 0.6,
-                            child: const Text("Los perros del refugio N°4 de Parque Patricios necesitan asistencia de manera urgente. Carecen de alimento balancedo hace meses y algunos están enfermitos y requierien atención médica. Por eso, me gustaría poder cubrir la deuda que tiene la actual protectora de animales que los tiene a cargo para que puedan tener la vida digna que merecen.",
-                              textAlign: TextAlign.justify,),
-                          ),
-                          const SizedBox(width: 20,),
-                          Expanded(
-                            child: Container(
-                              width: modalSize.width * 0.25,
-                              height: modalSize.width * 0.15,
-                              padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFE8FFD0),
-                                borderRadius: BorderRadius.circular(25.0)
+                slivers: [
+                  SliverFillRemaining(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                  width: modalSize.width * 0.6,
+                                  child: const FittedBox(child: Text("Descripción de la campaña", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w500),))
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: const AssetImage("assets/png/cardImage.png"),
-                                    radius: modalSize.width * 0.04,
+                              const SizedBox(width: 15,),
+                              Expanded(child: FittedBox(child: Text("Esta donación vence el ${DateTime.fromMillisecondsSinceEpoch(crowdfund.deadline)}"))),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 15,),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: modalSize.width * 0.6,
+                                child: Text(crowdfund.description, textAlign: TextAlign.justify,),
+                              ),
+                              const SizedBox(width: 20,),
+                              Expanded(
+                                child: Container(
+                                  width: modalSize.width * 0.25,
+                                  height: modalSize.width * 0.15,
+                                  padding: const EdgeInsets.all(5.0),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFFE8FFD0),
+                                      borderRadius: BorderRadius.circular(25.0)
                                   ),
-                                  const SizedBox(height: 5,),
-                                  const Text("Juan Pérez", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
-                                ],
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: const AssetImage("assets/png/cardImage.png"),
+                                        radius: modalSize.width * 0.04,
+                                      ),
+                                      const SizedBox(height: 5,),
+                                      const Text("Juan Pérez", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                            onPressed: () async {},
+                            style: TextButton.styleFrom(
+                                elevation: 2,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                                backgroundColor: const Color(0xFF4D5D67)),
+                            child: const SizedBox(
+                              height: 45,
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  "Donar a esta campaña",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Poppins",
+                                      fontSize: 20,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )),
+                      ],
                     ),
-                    const Spacer(),
-                    // TODO Lugar para el boton
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ],
