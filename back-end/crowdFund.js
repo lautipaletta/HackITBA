@@ -8,20 +8,22 @@ const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpiration
 
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({ state: 1 });
-    for(let crowdFund in data){
+    for(let crowdFund of data){
         if(crowdFund.deadline < Date.now()){
             crowdFund.state = -1;
             crowdFund.save();
         }
     }
+
     data = await modelCrowdFund.find({ state: 1 });
-    for (const crowdfund in data) {
-	console.log(crowdfund.contractAddress);
-    	crowdfund.collectedAmount = await getCollectedAmount(crowdfund.contractAddress);
+
+    let dataOut = [];
+    for (let i = 0; i < data.length; i++) {
+        dataOut.push({...data[i]._doc, collectedAmount: await getCollectedAmount(data[i].contractAddress)});
     }
-    console.log(data);
-    data = data.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
-    res.send(data);
+
+    dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
+    res.send(dataOut);
 });
 
 router.get("/search", async function (req, res) {
@@ -34,7 +36,6 @@ router.post("/new", async function (req, res) {
     const raiser = req.body.raiser;
     try{
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
-	    console.log(contractAddress);
 	    data.contractAddress = contractAddress;
 
 	    const crowdFund = new modelCrowdFund(data);
