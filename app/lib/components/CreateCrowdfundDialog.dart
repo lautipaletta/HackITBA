@@ -282,7 +282,7 @@ class CreateCrowdfundDialog extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 35, bottom: 30),
                         child: PersonalizedTextField(
-                            title: "Ingresa una descripción para tu camapaña",
+                            title: "Ingresa una descripción para tu campaña",
                             textPlaceholder:
                                 "Describe brevemente el objetivo de tu campaña de colecta y por qué es necesario que el resto te apoye en este objetivo",
                             icon: null,

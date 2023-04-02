@@ -17,9 +17,20 @@ class Crowdfund {
   Crowdfund({required this.title, required this.description, required this.receiverDescription, required this.goalAmount,
   required this.deadline, required this.receiverAddress, required this.images, required this.idOfRaiser}) : id = DateTime.now().millisecondsSinceEpoch.toString();
 
-  Crowdfund.fromJson(Map<String, dynamic> json) : id = json["id"], state = json["state"], title = json["title"], description = json["description"],
-        receiverDescription = json["receiverDescription"], goalAmount = json["goalAmount"], deadline = json["deadline"], images = json["images"], contractAddress = json["contractAddress"],
-        receiverAddress = json["receiverAddress"], idOfRaiser = json["idOfRaiser"], collectedAmount = json["collectedAmount"];
+  Crowdfund.fromJson(Map<String, dynamic> json) :
+        id = json["id"],
+        state = json["state"],
+        title = json["title"],
+        description = json["description"],
+        receiverDescription = json["receiverDescription"],
+        goalAmount = json["goalAmount"],
+        deadline = json["deadline"],
+        images = json["images"],
+        contractAddress = json["contractAddress"],
+        receiverAddress = json["receiverAddress"],
+        idOfRaiser = json["idOfRaiser"],
+        collectedAmount = json["collectedAmount"] ?? "0"
+  ;
 
   Map<String, dynamic> toJson(){
     return {

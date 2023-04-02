@@ -96,7 +96,7 @@ class CrowdfundCard extends StatelessWidget {
                             backgroundColor: const Color(0xFFF6F6F6),
                             color: getProgressBarColor(100 * double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount)),
                             minHeight: 12,
-                            value: double.parse(crowdfund.collectedAmount),
+                            value: double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount),
                           ),
                       ),
                     )
@@ -104,8 +104,8 @@ class CrowdfundCard extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () async {
-                    var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
-                    if(result != null) log("hola!!");
+                    if (crowdfund.state ==1 )
+                      var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
                   },
                   style: TextButton.styleFrom(
                     elevation: 2,

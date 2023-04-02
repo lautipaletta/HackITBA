@@ -141,7 +141,12 @@ class BackendController extends GetxController {
         int index = crowdfunds.indexWhere((element) => element.contractAddress == contractAddress);
         Crowdfund crowdfund = crowdfunds.elementAt(index);
         crowdfunds.removeAt(index);
-        crowdfund.collectedAmount = amount;
+
+        if (state == 0)
+          crowdfund.collectedAmount = crowdfund.goalAmount;
+        else
+          crowdfund.collectedAmount = amount;
+
         crowdfund.state = state;
         crowdfunds.insert(index, crowdfund);
         appController.updateCrowdfundsData(crowdfunds);

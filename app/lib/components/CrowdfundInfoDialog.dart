@@ -95,7 +95,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                                   backgroundColor: Color(0x4D5D67FF),
                                   color: getProgressBarColor(100 * double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount)),
                                   minHeight: 10,
-                                  value: double.parse(crowdfund.collectedAmount), // TODO hacer que ande
+                                  value: double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount),
                                 ),
                               ),
                             ),
@@ -167,8 +167,8 @@ class CrowdfundInfoDialog extends StatelessWidget {
                         const Spacer(),
                         TextButton(
                             onPressed: () async {
-                              var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
-                              if(result != null) log("El usuario quiere donar (era re bueno)");
+                              if (crowdfund.state == 1)
+                                var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
                             },
                             style: TextButton.styleFrom(
                                 elevation: 2,

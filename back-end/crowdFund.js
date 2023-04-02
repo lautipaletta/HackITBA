@@ -25,7 +25,7 @@ router.get("/get", async function (req, res) {
     for (let i = 0; i < data.length; i++) {
         try{
         	const {_id, __v, ...datai} = data[i]._doc;
-        dataOut.push({...datai, collectedAmount: await getCollectedAmount(data[i].contractAddress)};
+        	dataOut.push({...datai, collectedAmount: await getCollectedAmount(data[i].contractAddress)});
         
         }catch(err){
             return res.status(404).send({error: err});
@@ -48,7 +48,7 @@ router.post("/new", async function (req, res) {
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
 	    data.contractAddress = contractAddress;
 	    
-           data.images = saveImage(req.body.image, req.body.id, req.body.filename);
+           data.images = saveImage(req.body.image, req.body.crowdFund.id, req.body.filename);
 
 	    const crowdFund = new modelCrowdFund(data);
 	    await crowdFund.save();

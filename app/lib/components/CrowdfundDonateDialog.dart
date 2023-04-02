@@ -4,6 +4,7 @@ import 'package:app/components/CustomDialog.dart';
 import 'package:app/components/PersonalizedTextField.dart';
 import 'package:app/controllers/BackendController.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
@@ -52,9 +53,9 @@ class CrowdfundDonateDialog extends StatelessWidget {
                                     SizedBox(
                                       width: modalSize.width*0.8,
                                       child: PersonalizedTextField(
-                                          title: "Monto a donar \⬨",
+                                          title: "Monto a donar",
                                           textPlaceholder: "Ingresa el monto a donar en ether",
-                                          icon: null,
+                                          icon: FontAwesomeIcons.ethereum,
                                           controller: donationAmountController.value,
                                           type: 1),
                                     ),
@@ -62,6 +63,7 @@ class CrowdfundDonateDialog extends StatelessWidget {
                                       onPressed: () async {
                                         if (addressController.value.text.isNotEmpty && donationAmountController.value.text.isNotEmpty) {
                                           Crowdfund? crowdfund = await BackendController.donate(contractAddress, addressController.value.text, donationAmountController.value.text);
+                                          Get.back(result: crowdfund);
                                           Get.back(result: crowdfund);
                                         }
                                       },
