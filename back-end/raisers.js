@@ -21,7 +21,7 @@ router.post('/new', async function (req, res) {
     } else {
         const raiser = new modelRaiser(req.body.raiser);
         raiser.password = req.body.password;
-        raiser.profileImage = saveImage(req.body.image, raiser.id, req.body.filename);
+        raiser.profileImage = saveImage(req.body.image, req.body.raiser.id, req.body.filename);
         await raiser.save();
         res.send({isMatch: false});
     }

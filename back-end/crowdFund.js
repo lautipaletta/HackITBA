@@ -43,7 +43,7 @@ router.post("/new", async function (req, res) {
     try{
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
 	    data.contractAddress = contractAddress;
-        data.images = [saveImage(req.body.image, req.body.id, req.body.filename)];
+        data.images = [saveImage(req.body.image, req.body.crowdFund.id, req.body.filename)];
 
 	    const crowdFund = new modelCrowdFund(data);
 	    await crowdFund.save();
@@ -63,11 +63,12 @@ router.post("/new", async function (req, res) {
 router.post("/donate", async function (req, res) {
     try {
         const excessFlag = await addDonor(req.body.contractAddress, req.body.senderAddress, req.body.donation);
-        const crowdFund = await modelCrowdFund.findOne({ id: req.body.id });
+        const crowdFund = await modelCrowdFund.findOne({ contractAddress: req.body.contractAddress });
         crowdFund.state = 1 - excessFlag;
         crowdFund.save();
-        res.send({ amount: await getCollectedAmount(req.body.contractAddress), state: excessFlag });
+        res.send({ amount: await getCollectedAmount(req.body.contractAddress), state: 1-excessFlag });
     } catch (err) {
+    	console.log(err);
         res.status(404).send({ error: err });
     }
 });

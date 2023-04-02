@@ -119,7 +119,6 @@ class BackendController extends GetxController {
   static Future<Crowdfund?> donate(String contractAddress, String senderAddress, String donation) async {
     try {
       var data = {
-        "id": DateTime.now().millisecondsSinceEpoch.toString(),
         "contractAddress": contractAddress,
         "senderAddress": senderAddress,
         "donation": donation,
