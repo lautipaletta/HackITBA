@@ -28,7 +28,6 @@ router.post('/new', async function (req, res) {
 });
 
 router.post('/login', async function (req, res) {
-    console.log(req.body);
     const exists = await modelRaiser.exists({ name: req.body.name });
     if(exists){
         const response = await modelRaiser.findOne({ name: req.body.name });

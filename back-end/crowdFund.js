@@ -19,8 +19,6 @@ router.get("/get", async function (req, res) {
 
     data = await modelCrowdFund.find({ state: 1 });
 
-    console.log(data.length);
-    
     let dataOut = [];
     for (let i = 0; i < data.length; i++) {
         try{
@@ -32,7 +30,6 @@ router.get("/get", async function (req, res) {
         }
     }
     
-    //dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
     res.send(dataOut);
 });
 
