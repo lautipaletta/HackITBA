@@ -24,12 +24,14 @@ router.get("/get", async function (req, res) {
     let dataOut = [];
     for (let i = 0; i < data.length; i++) {
         try{
-        dataOut.push({ ...data[i]._doc}); //collectedAmount: await getCollectedAmount(data[i].contractAddress),
+        	const {_id, __v, ...datai} = data[i]._doc;
+        dataOut.push({...datai, collectedAmount: await getCollectedAmount(data[i].contractAddress)};
+        
         }catch(err){
             return res.status(404).send({error: err});
         }
     }
-    console.log(dataOut);
+    
     //dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
     res.send(dataOut);
 });
@@ -45,11 +47,8 @@ router.post("/new", async function (req, res) {
     try{
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
 	    data.contractAddress = contractAddress;
-<<<<<<< HEAD
-        data.images = saveImage(req.body.image, req.body.id, req.body.filename);
-=======
-        data.images = [saveImage(req.body.image, req.body.crowdFund.id, req.body.filename)];
->>>>>>> d09a65333986ce9ba4ff35561864e0b32878ac82
+	    
+           data.images = saveImage(req.body.image, req.body.id, req.body.filename);
 
 	    const crowdFund = new modelCrowdFund(data);
 	    await crowdFund.save();

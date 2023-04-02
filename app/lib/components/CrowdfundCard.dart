@@ -30,7 +30,7 @@ class CrowdfundCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network("$HOST${crowdfund.images[0]}"),
+                Image.network("$HOST${crowdfund.images}"),
                 Text(
                   crowdfund.title,
                   style: const TextStyle(
