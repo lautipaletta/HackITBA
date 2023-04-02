@@ -146,39 +146,42 @@ class CreateCrowdfundDialog extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RichText(
-                                    text: const TextSpan(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        children: [
-                                      TextSpan(text: "¿Cuanto quieres "),
-                                      TextSpan(
-                                          text: "recaudar",
+                            Padding(
+                              padding: const EdgeInsets.only(left: 27.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RichText(
+                                      text: const TextSpan(
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700)),
-                                      TextSpan(text: "?")
-                                    ])),
-                                SizedBox(
-                                  height: modalSize.height * 0.09,
-                                ),
-                                RichText(
-                                    text: const TextSpan(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        children: [
-                                      TextSpan(text: "¿"),
-                                      TextSpan(
-                                          text: "Hasta cuando",
+                                            fontSize: 16,
+                                          ),
+                                          children: [
+                                        TextSpan(text: "¿Cuanto quieres "),
+                                        TextSpan(
+                                            text: "recaudar",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: "?")
+                                      ])),
+                                  SizedBox(
+                                    height: modalSize.height * 0.09,
+                                  ),
+                                  RichText(
+                                      text: const TextSpan(
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700)),
-                                      TextSpan(text: " debe estar activa?")
-                                    ])),
-                              ],
+                                            fontSize: 16,
+                                          ),
+                                          children: [
+                                        TextSpan(text: "¿"),
+                                        TextSpan(
+                                            text: "Hasta cuando",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: " debe estar activa?")
+                                      ])),
+                                ],
+                              ),
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,13 +210,15 @@ class CreateCrowdfundDialog extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: SizedBox(
-                          width: modalSize.width * 0.65,
-                          child: Column(
+                          width: modalSize.width * 0.6,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
+                                  
                                   RichText(
                                       text: const TextSpan(
                                           style: TextStyle(
@@ -228,13 +233,27 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                                 fontWeight: FontWeight.w700)),
                                         TextSpan(text: " o "),
                                         TextSpan(
-                                            text: "beneficiario",
+                                            text: "destinatario",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700))
-                                      ])),
-                                  SizedBox(
-                                    width: modalSize.width * 0.15,
+                                      ]),
+                                      ),
+                                      SizedBox(height: modalSize.height*0.02,),
+                                      BasicTextField(
+                                    textPlaceholder: "Nombre",
+                                    hasIcon: false,
+                                    type: 1,
+                                    controller: nameReceptorController,
                                   ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: modalSize.height * 0.04,
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
                                   RichText(
                                       text: const TextSpan(
                                           style: TextStyle(
@@ -246,23 +265,9 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                             text: "Adress/Key",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700)),
-                                        TextSpan(text: " del beneficiario"),
+                                        TextSpan(text: " del destinatario"),
                                       ])),
-                                ],
-                              ),
-                              SizedBox(
-                                height: modalSize.height * 0.04,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  BasicTextField(
-                                    textPlaceholder: "Nombre",
-                                    hasIcon: false,
-                                    type: 1,
-                                    controller: nameReceptorController,
-                                  ),
+                                      SizedBox(height: modalSize.height*0.02,),
                                   BasicTextField(
                                       textPlaceholder: "Adress/Key",
                                       hasIcon: false,
