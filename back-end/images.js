@@ -1,12 +1,10 @@
 const fs = require("fs");
 
-function saveImage(imageData) {
-    const imageName = Date.now();
-
+function saveImage(imageData, id, filename) {
     const fileToSave = Buffer.from(imageData, "base64");
-    fs.writeFileSync(`/app/images/${imageName}`, fileToSave);
+    fs.writeFileSync(`/app/images/${filename}`, fileToSave);
 
-    return imageName;
+    return `/images/${id}${filename}`;
 }
 
 module.exports = saveImage;
