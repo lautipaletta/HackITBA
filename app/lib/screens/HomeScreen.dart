@@ -2,6 +2,7 @@ import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CreateCrowdfundDialog.dart';
 import 'package:app/components/CrowdfundCard.dart';
+import 'package:app/components/CrowdfundDonateDialog.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:app/controllers/AppController.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
+        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.dialog(CrowdfundDonateDialog()))
       ];
     }
     return [
