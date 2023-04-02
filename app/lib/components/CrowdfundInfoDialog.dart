@@ -1,12 +1,14 @@
 import 'package:app/classes/Crowdfund.dart';
+import 'package:app/classes/Raiser.dart';
 import 'package:app/components/CustomDialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class CrowdfundInfoDialog extends StatelessWidget {
-  const CrowdfundInfoDialog({super.key, required this.crowdfund});
+  const CrowdfundInfoDialog({super.key, required this.crowdfund, required this.raiser});
 
   final Crowdfund crowdfund;
+  final Raiser raiser;
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +86,8 @@ class CrowdfundInfoDialog extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(modalSize.height * 0.01),
                                 child: const LinearProgressIndicator(
-                                  backgroundColor: Color(0xFFF6F6F6),
-                                  color: Color(0xFFEFF189),
+                                  backgroundColor: Color(0x4D5D67FF),
+                                  color: Color(0x4D5D67FF),
                                   minHeight: 10,
                                   value: 0.7,
                                 ),
@@ -148,7 +150,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                                         radius: modalSize.width * 0.04,
                                       ),
                                       const SizedBox(height: 5,),
-                                      const Text("Juan Pérez", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
+                                      Text(raiser.name, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 22.0),),
                                     ],
                                   ),
                                 ),

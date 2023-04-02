@@ -1,3 +1,4 @@
+import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CreateCrowdfundDialog.dart';
@@ -5,6 +6,7 @@ import 'package:app/components/CrowdfundCard.dart';
 import 'package:app/components/CrowdfundDonateDialog.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:app/controllers/AppController.dart';
+import 'package:app/controllers/BackendController.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +46,10 @@ class HomeScreen extends StatelessWidget {
     List<Widget> list = [];
     for(Crowdfund crowdfund in crowdfunds){
       list.add(
-        CrowdfundCard(crowdfund: crowdfund, onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund),),),
+        CrowdfundCard(crowdfund: crowdfund, onTap: () async {
+          Raiser? raiser = await BackendController.getRaiser(crowdfund.idOfRaiser);
+          Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund, raiser: raiser!,),);
+        }),
       );
     }
     return list;
@@ -173,12 +178,7 @@ class HomeScreen extends StatelessWidget {
                       return Wrap(
                         runSpacing: 40.0,
                         alignment: WrapAlignment.spaceEvenly,
-                        children:  [
-                          CrowdfundCard(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106"), onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106")),),),
-                          CrowdfundCard(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106"), onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106")),),),
-                          CrowdfundCard(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106"), onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106")),),),
-                          CrowdfundCard(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106"), onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: Crowdfund(title: "Proyecto de donacion decomida para comedor San Juan", description: "Se pretende juntar \$10.000 para financiar los primeros meses del comedor", receiverDescription: "Comedor San Juan", goalAmount: "100", deadline: 1680451456106, receiverAddress: "0x23716egh6adsast6tyg1", images: [], idOfRaiser: "1680411856106")),),),
-                        ]// buildCrowdfundsCards(controller.crowdfunds)
+                        children: buildCrowdfundsCards(controller.crowdfunds)
                       );
                     },
                   ),
