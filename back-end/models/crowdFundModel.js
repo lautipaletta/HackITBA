@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 
 const schemaCrowdFund = new Schema({
         id: String,
-        active: Boolean,
+        state: Number,
         title: String,
         description: String,
         receiverDescription: String,

@@ -99,7 +99,7 @@ class BackendController extends GetxController {
       if(response.statusCode == 200){
         raiser.crowdFundsIds.add(crowdfund.id);
         Get.find<AppController>().updateLoggedInRaiserData(raiser);
-        return Crowdfund.fromJson(jsonDecode(response.body));
+        return Crowdfund.fromJson(jsonDecode(response.body)); // TODO Agregar y actualizar los crowdfunds en la lista del appcontroller
       } else {
         log("newCrowdfund() failed, status code: ${response.statusCode}");
       }
