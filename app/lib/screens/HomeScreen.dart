@@ -1,9 +1,12 @@
+import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CreateCrowdfundDialog.dart';
 import 'package:app/components/CrowdfundCard.dart';
+import 'package:app/components/CrowdfundDonateDialog.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:app/controllers/AppController.dart';
+import 'package:app/controllers/BackendController.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/"))
+        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.dialog(CrowdfundDonateDialog()))
       ];
     }
     return [
@@ -43,7 +46,10 @@ class HomeScreen extends StatelessWidget {
     List<Widget> list = [];
     for(Crowdfund crowdfund in crowdfunds){
       list.add(
-        CrowdfundCard(crowdfund: crowdfund, onTap: () => Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund),),),
+        CrowdfundCard(crowdfund: crowdfund, onTap: () async {
+          Raiser? raiser = await BackendController.getRaiser(crowdfund.idOfRaiser);
+          Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund, raiser: raiser!,),);
+        }),
       );
     }
     return list;
@@ -172,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                       return Wrap(
                         runSpacing: 40.0,
                         alignment: WrapAlignment.spaceEvenly,
-                        children: buildCrowdfundsCards(controller.crowdfunds),
+                        children: buildCrowdfundsCards(controller.crowdfunds)
                       );
                     },
                   ),

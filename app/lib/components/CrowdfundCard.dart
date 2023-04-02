@@ -1,38 +1,37 @@
-import 'package:app/classes/Crowdfund.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'dart:math';
-
-final random = Random();
-
-double randomNumber = random.nextDouble(); // lo uso solo para poder asignarle valores random al progressbar
+import 'package:app/classes/Crowdfund.dart';
 
 class CrowdfundCard extends StatelessWidget {
-  CrowdfundCard({
-    super.key,
-    required this.crowdfund, required this.onTap});
+  const CrowdfundCard({super.key, required this.crowdfund, required this.onTap});
 
-    final Crowdfund crowdfund;
-    final VoidCallback onTap;
+  final Crowdfund crowdfund;
+  final VoidCallback onTap;
 
-    Color valueColor = randomNumber < 0.1
-                            ? Colors.red // rojo si el valor de progreso es menor a 0.2
-                            : randomNumber < 0.3
-                                ? const Color.fromARGB(255, 232, 114, 64) // naranja si el valor de progreso es menor a 0.4
-                            : randomNumber < 0.4
-                                ? Colors.orange // naranja si el valor de progreso es menor a 0.4
-                                : randomNumber < 0.6
-                                    ? Colors.yellow // amarillo si el valor de progreso es menor a 0.6
-                                    : randomNumber < 0.8
-                                        ? Colors.lightGreen // amarillito/verde si el valor de progreso es menor a 0.8
-                                        : const Color(0xFF5AE870); // verde si el valor de progreso es mayor o igual a 0.8
-                      
+  Color getProgressBarColor(double percentage){
+      Color valueColor = percentage < 10
+          ? Colors.red // rojo si el valor de progreso es menor a 0.2
+          : percentage < 30
+          ? const Color.fromARGB(255, 232, 114, 64) // naranja si el valor de progreso es menor a 0.4
+          : percentage < 40
+          ? Colors.orange // naranja si el valor de progreso es menor a 0.4
+          : percentage < 60
+          ? Colors.yellow // amarillo si el valor de progreso es menor a 0.6
+          : percentage < 80
+          ? Colors.lightGreen // amarillito/verde si el valor de progreso es menor a 0.8
+          : const Color(0xFF5AE870); // verde si el valor de progreso es mayor o igual a 0.8
+      return valueColor;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.25,
-        height: MediaQuery.of(context).size.height*0.8,
+        width: MediaQuery.of(context).size.width * 0.25,
+        height: MediaQuery.of(context).size.height * 0.8,
         child: Card(
           elevation: 12,
           shape:const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))) ,
@@ -42,25 +41,23 @@ class CrowdfundCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(crowdfund.images[0]),
+                Image.network("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"), // TODO Poner imagen de la campaña
                 Text(
                   crowdfund.title,
                   style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w800,
                   ),
-                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   crowdfund.description,
                   style: const TextStyle(
                     color: Color(0xFF303030),
-                    fontSize: 9,
+                    fontSize: 18,
                     fontWeight: FontWeight.w300,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 4,
+                  textAlign: TextAlign.center,
                 ),
                 const Opacity(
                   opacity: 0.5,
@@ -77,7 +74,7 @@ class CrowdfundCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                       Text(
-                        "Colecta para ${crowdfund.receiverDescription} - Quedan ${crowdfund.deadline} dias",
+                        "Colecta para ${crowdfund.receiverDescription} - Quedan ${DateTime.fromMillisecondsSinceEpoch(crowdfund.deadline)} dias",
                         style: const TextStyle(
                           color: Color(0xFF857D7D),
                           fontSize: 8,
@@ -106,15 +103,12 @@ class CrowdfundCard extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-
                           child: LinearProgressIndicator(
-
                             backgroundColor: const Color(0xFFF6F6F6),
-                            color: valueColor,
+                            color: getProgressBarColor(100 * double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount)),
                             minHeight: 12,
-                            value: randomNumber,
+                            value: double.parse(crowdfund.collectedAmount),
                           ),
-
                       ),
                     )
                   ],

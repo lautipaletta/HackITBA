@@ -96,7 +96,6 @@ class BackendController extends GetxController {
         },
         body: jsonEncode(data),
       );
-      log(response.body);
       if(response.statusCode == 200){
         raiser.crowdFundsIds.add(crowdfund.id);
         Get.find<AppController>().updateLoggedInRaiserData(raiser);
