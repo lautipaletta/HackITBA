@@ -21,8 +21,8 @@ class AppController extends GetxController {
     update();
   }
 
-  void updateCrowdfundsData(List<Crowdfund> crowdfunds){
-    crowdfunds = crowdfunds;
+  void updateCrowdfundsData(List<Crowdfund> newCrowdfunds){
+    crowdfunds = newCrowdfunds;
     update();
   }
 

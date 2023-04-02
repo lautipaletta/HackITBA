@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/classes/Raiser.dart';
 import 'package:app/controllers/AppController.dart';
@@ -43,11 +44,13 @@ class BackendController extends GetxController {
     return null;
   }
 
-  static Future<bool> registerRaiser(Raiser raiser, String password) async {
+  static Future<bool> registerRaiser(Raiser raiser, String password, Uint8List imageBytes, String filename) async {
     try {
       var data = {
         "raiser": raiser.toJson(),
         "password": sha256.convert(utf8.encode(password)).toString(),
+        "image": base64Encode(imageBytes),
+        "filename": filename,
       };
       var response = await http.post(
         Uri.parse("http://localhost:3000/raiser/new/"),
@@ -71,7 +74,9 @@ class BackendController extends GetxController {
     try {
       var response = await http.get(Uri.parse("http://localhost:3000/crowdFund/get"),);
       if(response.statusCode == 200){
+        log(response.body);
         List<Crowdfund> crowdfunds = (jsonDecode(response.body) as List<dynamic>).map((e) => Crowdfund.fromJson(e)).toList();
+        log(crowdfunds.length.toString());
         return crowdfunds;
       } else {
         log("getCrowdfund() failed, status code: ${response.statusCode}");
@@ -82,12 +87,14 @@ class BackendController extends GetxController {
     return [];
   }
 
-  static Future<Crowdfund?> newCrowdfund(Crowdfund crowdfund) async {
+  static Future<Crowdfund?> newCrowdfund(Crowdfund crowdfund, Uint8List imageBytes, String filename) async {
     try {
       Raiser raiser = Get.find<AppController>().loggedInRaiser!;
       var data = {
         "crowdFund": crowdfund.toJson(),
         "raiser": raiser.toJson(),
+        "image": base64Encode(imageBytes),
+        "filename": filename,
       };
       var response = await http.post(
         Uri.parse("http://localhost:3000/crowdFund/new/"),
@@ -114,7 +121,6 @@ class BackendController extends GetxController {
   static Future<Crowdfund?> donate(String contractAddress, String senderAddress, String donation) async {
     try {
       var data = {
-        "id": DateTime.now().millisecondsSinceEpoch.toString(),
         "contractAddress": contractAddress,
         "senderAddress": senderAddress,
         "donation": donation,

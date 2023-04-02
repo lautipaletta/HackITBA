@@ -26,6 +26,7 @@ class RegisterScreen extends StatelessWidget {
   final addressTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
   Uint8List? bytesFile;
+  String? filename;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +95,9 @@ class RegisterScreen extends StatelessWidget {
                             return Row(
                               children: [
                                 TextButton(onPressed: () async {
-                                  bytesFile = await ImagePickerWeb.getImageAsBytes();
-                                  if (bytesFile != null) controller.changeFilePickedState();
-                                  log("Bytes vale $bytesFile");
+                                  var data = (await ImagePickerWeb.getImageInfo);
+                                  bytesFile = data!.data;
+                                  if (bytesFile != null) filename = data.fileName;
                                 }, child: const Text("Cargar imagen de perfil")),
                                 Text( (controller.filePicked) ? "Imagen seleccionada." : "" ),
                               ],
@@ -118,7 +119,7 @@ class RegisterScreen extends StatelessWidget {
 
                               if(name != "" && address != "" && contactInfo != "" && description != "" && password1 != "" && password2 != "" && bytesFile != null && password1 == password2){
                                 Raiser raiser = Raiser(name: name, description: description, contactInfo: contactInfo, profileImage: bytesFile.toString(), address: address);
-                                bool result = await BackendController.registerRaiser(raiser, password1);
+                                bool result = await BackendController.registerRaiser(raiser, password1, bytesFile!, filename!);
                                 if(result){
                                   Get.offAllNamed("/login");
                                 } else {

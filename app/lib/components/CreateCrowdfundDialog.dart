@@ -25,7 +25,7 @@ class MyController extends GetxController {
 }
 
 class CreateCrowdfundDialog extends StatelessWidget {
-  CreateCrowdfundDialog({super.key, this.imagePath});
+  CreateCrowdfundDialog({super.key});
 
   final Rx<TextEditingController> nameController = TextEditingController().obs;
   final Rx<TextEditingController> descriptionController =
@@ -40,8 +40,8 @@ class CreateCrowdfundDialog extends StatelessWidget {
 
   final AppController _appController = Get.find<AppController>();
 
-  final String? imagePath;
   Uint8List? bytesFile;
+  String? filename;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,6 @@ class CreateCrowdfundDialog extends StatelessWidget {
     final nextMonth = DateTime(now.year, now.month + 1, now.day);
     final formattedDate =
         "${nextMonth.day}-${nextMonth.month}-${nextMonth.year}";
-    var pickedFile;
 
     return CustomDialog(
       width: screenSize.width * 0.6,
@@ -68,9 +67,12 @@ class CreateCrowdfundDialog extends StatelessWidget {
                 builder: (controller) {
                   return GestureDetector(
                     onTap: () async {
-                      bytesFile = await ImagePickerWeb.getImageAsBytes();
-                      if (bytesFile != null) controller.changeFilePickedState();
-                      log("Bytes vale $bytesFile");
+                      var data = await ImagePickerWeb.getImageInfo;
+                      bytesFile = data!.data;
+                      if (bytesFile != null){
+                        controller.changeFilePickedState();
+                        filename = data.fileName;
+                      }
                     },
                     child: controller.filePicked
                         ? Container(
@@ -144,39 +146,42 @@ class CreateCrowdfundDialog extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RichText(
-                                    text: const TextSpan(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        children: [
-                                      TextSpan(text: "¿Cuanto quieres "),
-                                      TextSpan(
-                                          text: "recaudar",
+                            Padding(
+                              padding: const EdgeInsets.only(left: 27.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RichText(
+                                      text: const TextSpan(
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700)),
-                                      TextSpan(text: "?")
-                                    ])),
-                                SizedBox(
-                                  height: modalSize.height * 0.09,
-                                ),
-                                RichText(
-                                    text: const TextSpan(
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                        children: [
-                                      TextSpan(text: "¿"),
-                                      TextSpan(
-                                          text: "Hasta cuando",
+                                            fontSize: 16,
+                                          ),
+                                          children: [
+                                        TextSpan(text: "¿Cuanto quieres "),
+                                        TextSpan(
+                                            text: "recaudar",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: "?")
+                                      ])),
+                                  SizedBox(
+                                    height: modalSize.height * 0.09,
+                                  ),
+                                  RichText(
+                                      text: const TextSpan(
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700)),
-                                      TextSpan(text: " debe estar activa?")
-                                    ])),
-                              ],
+                                            fontSize: 16,
+                                          ),
+                                          children: [
+                                        TextSpan(text: "¿"),
+                                        TextSpan(
+                                            text: "Hasta cuando",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700)),
+                                        TextSpan(text: " debe estar activa?")
+                                      ])),
+                                ],
+                              ),
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,13 +210,15 @@ class CreateCrowdfundDialog extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 20.0),
                         child: SizedBox(
-                          width: modalSize.width * 0.65,
-                          child: Column(
+                          width: modalSize.width * 0.6,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
+                                  
                                   RichText(
                                       text: const TextSpan(
                                           style: TextStyle(
@@ -226,13 +233,27 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                                 fontWeight: FontWeight.w700)),
                                         TextSpan(text: " o "),
                                         TextSpan(
-                                            text: "beneficiario",
+                                            text: "destinatario",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700))
-                                      ])),
-                                  SizedBox(
-                                    width: modalSize.width * 0.15,
+                                      ]),
+                                      ),
+                                      SizedBox(height: modalSize.height*0.02,),
+                                      BasicTextField(
+                                    textPlaceholder: "Nombre",
+                                    hasIcon: false,
+                                    type: 1,
+                                    controller: nameReceptorController,
                                   ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: modalSize.height * 0.04,
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
                                   RichText(
                                       text: const TextSpan(
                                           style: TextStyle(
@@ -244,23 +265,9 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                             text: "Adress/Key",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700)),
-                                        TextSpan(text: " del beneficiario"),
+                                        TextSpan(text: " del destinatario"),
                                       ])),
-                                ],
-                              ),
-                              SizedBox(
-                                height: modalSize.height * 0.04,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  BasicTextField(
-                                    textPlaceholder: "Nombre",
-                                    hasIcon: false,
-                                    type: 1,
-                                    controller: nameReceptorController,
-                                  ),
+                                      SizedBox(height: modalSize.height*0.02,),
                                   BasicTextField(
                                       textPlaceholder: "Adress/Key",
                                       hasIcon: false,
@@ -292,10 +299,10 @@ class CreateCrowdfundDialog extends StatelessWidget {
                                   goalAmount: goalAmountController.value.text,
                                   deadline: int.parse(dateController.value.text),
                                   receiverAddress: addressController.value.text,
-                                  images: [bytesFile.toString(),],
+                                  images: "",
                                   idOfRaiser: _appController.loggedInRaiser!.id,
                               );
-                              Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund);
+                              Crowdfund? newCrowdfund = await BackendController.newCrowdfund(crowdfund, bytesFile!, filename!);
                               if(newCrowdfund != null){
                                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                   // ignore: prefer_const_constructors

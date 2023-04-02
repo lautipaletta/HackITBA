@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:app/classes/Raiser.dart';
 import 'package:app/components/AppBarTextItem.dart';
 import 'package:app/classes/Crowdfund.dart';
+import 'package:app/components/ColectappInfoDialog.dart';
 import 'package:app/components/CreateCrowdfundDialog.dart';
 import 'package:app/components/CrowdfundCard.dart';
 import 'package:app/components/CrowdfundDonateDialog.dart';
@@ -12,11 +15,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final AppController _appController = Get.find<AppController>();
+
+  @override
+  void initState() {
+    super.initState();
+    BackendController.getCrowdfund().then((value) => _appController.updateCrowdfundsData(value));
+  }
 
   List<Widget> getLogInButton(AppController appController, Size screenSize){
     if(appController.loggedInRaiser == null){
@@ -24,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.dialog(CrowdfundDonateDialog()))
+        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.dialog(ColectappDialog())),
       ];
     }
     return [
@@ -36,7 +50,7 @@ class HomeScreen extends StatelessWidget {
 
   VoidCallback getCreateCrowdfundButtonAction(AppController appController){
     if(appController.loggedInRaiser != null){
-      return () => Get.dialog(CreateCrowdfundDialog(imagePath: null));
+      return () => Get.dialog(CreateCrowdfundDialog());
     } else {
       return () => Get.toNamed("/login");
     }
@@ -46,7 +60,7 @@ class HomeScreen extends StatelessWidget {
     List<Widget> list = [];
     for(Crowdfund crowdfund in crowdfunds){
       list.add(
-        CrowdfundCard(crowdfund: crowdfund, onTap: () async {
+        CrowdfundCard(crowdfund: crowdfund, onTap: () async { //0x713E02035F7045fcC04112f0e3e8722648b18129
           Raiser? raiser = await BackendController.getRaiser(crowdfund.idOfRaiser);
           Get.dialog(CrowdfundInfoDialog(crowdfund: crowdfund, raiser: raiser!,),);
         }),

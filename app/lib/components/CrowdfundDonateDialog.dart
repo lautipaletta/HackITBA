@@ -1,15 +1,18 @@
+import 'package:app/classes/Crowdfund.dart';
 import 'package:app/components/CrowdfundInfoDialog.dart';
 import 'package:app/components/CustomDialog.dart';
 import 'package:app/components/PersonalizedTextField.dart';
 import 'package:app/controllers/BackendController.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class CrowdfundDonateDialog extends StatelessWidget {
-    CrowdfundDonateDialog({super.key});
+    CrowdfundDonateDialog({super.key, required this.contractAddress});
 
     final Rx<TextEditingController> addressController = TextEditingController().obs;
     final Rx<TextEditingController> donationAmountController = TextEditingController().obs;
+    final String contractAddress;
     
     @override
     Widget build(BuildContext context) {
@@ -56,9 +59,10 @@ class CrowdfundDonateDialog extends StatelessWidget {
                                           type: 1),
                                     ),
                                     TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         if (addressController.value.text.isNotEmpty && donationAmountController.value.text.isNotEmpty) {
-                                          //BackendController.donate(, addressController.value.text, donationAmountController.value.text);
+                                          Crowdfund? crowdfund = await BackendController.donate(contractAddress, addressController.value.text, donationAmountController.value.text);
+                                          Get.back(result: crowdfund);
                                         }
                                       },
                                       style: TextButton.styleFrom(

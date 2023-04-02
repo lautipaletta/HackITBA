@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:app/classes/Crowdfund.dart';
 import 'package:app/classes/Raiser.dart';
+import 'package:app/components/CrowdfundDonateDialog.dart';
 import 'package:app/components/CustomDialog.dart';
+import 'package:app/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class CrowdfundInfoDialog extends StatelessWidget {
   const CrowdfundInfoDialog({super.key, required this.crowdfund, required this.raiser});
@@ -35,7 +41,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                     width: modalSize.width,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
-                      child: Image.asset("assets/jpg/crowdfund.jpg", fit: BoxFit.fitWidth,),
+                      child: Image.network("$HOST${crowdfund.images[0]}", fit: BoxFit.fitWidth,),
                     )
                   ),
                   Container(
@@ -85,11 +91,11 @@ class CrowdfundInfoDialog extends StatelessWidget {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(modalSize.height * 0.01),
-                                child: const LinearProgressIndicator(
+                                child: LinearProgressIndicator(
                                   backgroundColor: Color(0x4D5D67FF),
-                                  color: Color(0x4D5D67FF),
+                                  color: getProgressBarColor(100 * double.parse(crowdfund.collectedAmount) / double.parse(crowdfund.goalAmount)),
                                   minHeight: 10,
-                                  value: 0.7,
+                                  value: double.parse(crowdfund.collectedAmount), // TODO hacer que ande
                                 ),
                               ),
                             ),
@@ -146,7 +152,7 @@ class CrowdfundInfoDialog extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       CircleAvatar(
-                                        backgroundImage: const AssetImage("assets/png/cardImage.png"),
+                                        backgroundImage: NetworkImage("$HOST${raiser.profileImage}"),
                                         radius: modalSize.width * 0.04,
                                       ),
                                       const SizedBox(height: 5,),
@@ -160,7 +166,10 @@ class CrowdfundInfoDialog extends StatelessWidget {
                         ),
                         const Spacer(),
                         TextButton(
-                            onPressed: () async {},
+                            onPressed: () async {
+                              var result = await Get.dialog(CrowdfundDonateDialog(contractAddress: crowdfund.contractAddress!,));
+                              if(result != null) log("El usuario quiere donar (era re bueno)");
+                            },
                             style: TextButton.styleFrom(
                                 elevation: 2,
                                 shape: const RoundedRectangleBorder(
