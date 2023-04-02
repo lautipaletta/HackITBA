@@ -32,10 +32,10 @@ async function addDonor(contractAddress, senderAddress, donationAmount) {
 
     let donationAmountWei = web3.utils.toBN(web3.utils.toWei(donationAmount));
 
-    let crowdfundingCompleted = false;
+    let crowdfundingCompleted = 0;
     if (targetAmountWei.lte(amountCollectedWei.add(donationAmountWei))) {
         donationAmountWei = targetAmountWei.sub(amountCollectedWei); 
-        crowdfundingCompleted = true;
+        crowdfundingCompleted = 1;
     }
 
     await contract.methods.addDonor().send({
