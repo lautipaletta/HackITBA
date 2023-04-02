@@ -34,7 +34,7 @@ contract Crowdfund {
 
     event crowdfundRefunded(uint donorsRefunded, uint totalDonors); 
     function checkExpirationDate() public payable {
-        if (block.timestamp >= contractExpiration) {
+        if (block.timestamp * 1000 >= contractExpiration) {
             uint donorsRefunded = 0;
             for (uint i = 0; i < donors.length; i++) {
                 (bool success, ) = donors[i].addr.call{value: donors[i].donation}(""); 
