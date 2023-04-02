@@ -5,7 +5,7 @@ const modelRaiser = require("./models/raiserModel");
 const saveImage = require("./images");
 
 router.get('/get', async function (req, res) {
-    const raiser = await modelRaiser.findOne({ id: req.query.name });
+    const raiser = await modelRaiser.findOne({ id: req.query.id });
     if (raiser) {
         const { password, ...response } = raiser._doc;
         res.send({ raiser: response });

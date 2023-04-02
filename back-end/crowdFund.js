@@ -6,7 +6,7 @@ const modelCrowdFund = require("./models/crowdFundModel");
 
 const saveImage = require("./images");
 
-const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpirationDate } = require("./smartcontracts/smartcontracts");
+const { createCrowfundingContract, addDonor, getCollectedAmount } = require("./smartcontracts/smartcontracts");
 
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({ state: 1 });
@@ -21,7 +21,11 @@ router.get("/get", async function (req, res) {
 
     let dataOut = [];
     for (let i = 0; i < data.length; i++) {
+        try{
         dataOut.push({...data[i]._doc, collectedAmount: await getCollectedAmount(data[i].contractAddress)});
+        }catch(err){
+            res.status(404).send({error: err});
+        }
     }
 
     dataOut = dataOut.sort((a, b) => (a.collectedAmount.localeCompare(b.collectedAmount)));
