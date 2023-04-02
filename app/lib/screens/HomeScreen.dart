@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         AppBarTextItem(text: "Inicio", onTap: () => _scrollController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Campañas", onTap: () => _scrollController.animateTo(screenSize.height, duration: const Duration(seconds: 1), curve: Curves.easeInOut)),
         AppBarTextItem(text: "Iniciar Sesión", onTap: () => Get.toNamed("/login")),
-        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.toNamed("/")),
+        AppBarTextItem(text: "¿Qué es CollectApp?", onTap: () => Get.dialog(CreateCrowdfundDialog())),
       ];
     }
     return [
