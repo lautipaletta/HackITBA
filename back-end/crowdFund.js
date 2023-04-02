@@ -43,7 +43,7 @@ router.post("/new", async function (req, res) {
     try{
 	    const contractAddress = await createCrowfundingContract(raiser.address, data.receiverAddress, data.goalAmount, data.deadline);
 	    data.contractAddress = contractAddress;
-        data.images = [saveImage(req.body.image, req.body.id, req.body.filename)];
+        data.images = saveImage(req.body.image, req.body.id, req.body.filename);
 
 	    const crowdFund = new modelCrowdFund(data);
 	    await crowdFund.save();

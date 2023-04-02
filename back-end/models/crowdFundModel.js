@@ -9,7 +9,7 @@ const schemaCrowdFund = new Schema({
         receiverDescription: String,
         goalAmount: String,
         deadline: Number,
-        images: [String],
+        images: String,
         //resultImages: [String],
         resultComments: String,
         contractAddress: String,
