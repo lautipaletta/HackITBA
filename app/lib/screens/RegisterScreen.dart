@@ -61,8 +61,9 @@ class RegisterScreen extends StatelessWidget {
               child: CustomScrollView(
                 slivers: [
                   SliverFillRemaining(
+                    hasScrollBody: false,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Column(
