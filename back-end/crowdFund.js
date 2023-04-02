@@ -8,6 +8,14 @@ const { createCrowfundingContract, addDonor, getCollectedAmount, checkExpiration
 
 router.get("/get", async function (req, res) {
     let data = await modelCrowdFund.find({ state: 1 });
+    for(let crowdFund of data){
+        checkExpirationDate(crowdFund.contractAddress, crowdFund.senderAddress);
+        if(crowdFund.deadline < Date.now()){
+            crowdFund.state = -1;
+            crowdFund.save();
+        }
+    }
+    data = await modelCrowdFund.find({ state: 1 });
     data = data.map(x => ({ collectedAmount: getCollectedAmount(x.address), ...x }));
     data = data.sort(String.compare(a.collectedAmount, b.collectedAmount));
     res.send(data);
